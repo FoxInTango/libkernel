@@ -36,6 +36,7 @@ PROJECT_DIR_BESIDES += -path ./.git
 PROJECT_DIR_BESIDES += -o -path ./obj
 PROJECT_DIR_BESIDES += -o -path ./bin
 PROJECT_DIR_BESIDES += -o -path ./lib
+PROJECT_DIR_BESIDES += -o -path ./modules
 PROJECT_DIR_BESIDES += -o -path ./.trash
 PROJECT_DIR_BESIDES += \)
 PROJECT_DIRS   = $(shell find $(PROJECT_ROOT) $(PROJECT_DIR_BESIDES) -prune -o -type d -print)
@@ -117,9 +118,9 @@ $(TARGET_OBJECTS_CC):%.o:%.c
 $(TARGET_OBJECTS_PP):%.o:%.cpp
 	$(CC) ${PPFLAGS} $< -o $@
 $(kernel_system_call_hooks):
-	-cd ./modules/kernel_syscall_hooks && $(MAKE) && cp .lib/*.ko ../modules
+	-cd ./modules/kernel_syscall_hooks && $(MAKE) && cp ./*.ko ../modules
 $(kernel_network_hooks):
-#-cd ./modules/kernel_network_hooks && $(MAKE) && cp .lib/*.ko ../modules
+#-cd ./modules/kernel_network_hooks && $(MAKE) && cp ./*.ko ../modules
 
 clean   :
 	rm -f $(TARGET_OBJECTS_AS)
