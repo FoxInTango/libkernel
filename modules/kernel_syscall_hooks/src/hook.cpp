@@ -1,7 +1,6 @@
 #include "hook.h"
 #include "echo.h"
 
-#include <linux/kallsyms.h>
 #include <vector>
 
 class Hook {
@@ -12,11 +11,6 @@ public:
     for(int i = 0;i < 10;i ++) {
         //hook_array.push_back(i);
     }
-    unsigned long* sys_call_table;
-
-    // 获取 sys_call_table 的虚拟内存地址
-    sys_call_table = (unsigned long*)kallsyms_lookup_name("sys_call_table");
-    echo("sys_call_table address %p\n",sys_call_table);
     }
    ~Hook() { echo("Hook Exited.\n");
        int i = 0;
