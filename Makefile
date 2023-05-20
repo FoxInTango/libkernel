@@ -118,9 +118,9 @@ $(TARGET_OBJECTS_CC):%.o:%.c
 $(TARGET_OBJECTS_PP):%.o:%.cpp
 	$(CC) ${PPFLAGS} $< -o $@
 kernel_syscall_hooks:
-	-cd ./modules/kernel_syscall_hooks && $(MAKE) && cp ./*.ko ../../modules
+	-cd ./modules/kernel_syscall_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
 kernel_network_hooks:
-#-cd ./modules/kernel_network_hooks && $(MAKE) && cp ./*.ko ../../modules
+#-cd ./modules/kernel_network_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
 
 clean   :
 	rm -f $(TARGET_OBJECTS_AS)
