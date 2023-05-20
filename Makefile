@@ -117,7 +117,7 @@ $(TARGET_OBJECTS_CC):%.o:%.c
 	$(CC) ${CCFLAGS} $< -o $@
 $(TARGET_OBJECTS_PP):%.o:%.cpp
 	$(CC) ${PPFLAGS} $< -o $@
-$(kernel_system_call_hooks):
+$(kernel_syscall_hooks):
 	-cd ./modules/kernel_syscall_hooks && $(MAKE) && cp ./*.ko ../modules
 $(kernel_network_hooks):
 #-cd ./modules/kernel_network_hooks && $(MAKE) && cp ./*.ko ../modules
