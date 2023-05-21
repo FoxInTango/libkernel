@@ -2,6 +2,7 @@
 #include "echo.h"
 
 #include <vector>
+#include <libarguments/libarguments.h>
 #include <libcpp/libcpp.h>
 
 class Hook {
@@ -10,7 +11,7 @@ public:
 public:
     Hook() { echo("Hook Here.\n"); 
     foxintango::Array<int> int_array;
-    
+    foxintango::arguments args;
     for(int i = 0;i < 10;i ++) {
         //hook_array.push_back(i);
     }
