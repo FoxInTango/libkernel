@@ -21,7 +21,7 @@ LIBCPP_SOURCES_PP  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
 LIBCPP_OBJECTS_PP  += $(patsubst %.cpp,obj/%.o,$(notdir ${LIBCPP_SOURCES_PP}))
 
 # ****************core****************
-CORE_ROOT = ../core
+CORE_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))/../core
 CORE_DIR_BESIDES  = \(
 CORE_DIR_BESIDES += -path    ${CORE_ROOT}/lib
 CORE_DIR_BESIDES += -o -path ${CORE_ROOT}/obj
