@@ -81,8 +81,8 @@ obj-m += $(MODULE_NAME).o
 
 $(MODULE_NAME)-y := $(MODULE_OBJECTS)
 
-.PHONY: ${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP} $(MODULE_NAME).ko
-$(MODULE_NAME).ko:
+.PHONY: $(MODULE_NAME).ko
+$(MODULE_NAME).ko:${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
 	@echo ************************SUPER************************
 	@echo 上层头文件路径:     ${SUPER_INCLUDE_PATH}
 	@echo 上层库文件路径:     ${SUPER_LIBRARY_PATH}
@@ -107,10 +107,10 @@ cxx-prefix := " $(HOSTCXX) [M]  "
 	@echo -n > $$(dirname $@)/.$$(basename $@).cmd
 
 ${CORE_OBJECTS_CC}:%.o:%.c
-	@$(HOSTCXX) $(cxxflags) -c $< -o ./obj/$(notdir $@) # $(patsubst %.c,obj/%.o,$(notdir ${CORE_SOURCES_PP}))
+	@$(HOSTCXX) $(cxxflags) -c $< -o ./src/$(notdir $@) # $(patsubst %.c,obj/%.o,$(notdir ${CORE_SOURCES_PP}))
 ${CORE_OBJECTS_PP}:%.o:%.cpp
 	@echo $(cxx-prefix)$@
-	@$(HOSTCXX) $(cxxflags) -c $< -o ./obj/$(notdir $@)
+	@$(HOSTCXX) $(cxxflags) -c $< -o ./src/$(notdir $@)
 
 .PHONY: clean
 clean:
