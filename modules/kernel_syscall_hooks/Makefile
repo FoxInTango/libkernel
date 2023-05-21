@@ -4,15 +4,24 @@
 # Oleg Kutkov, 2019
 #
 
+# libcpp
+LIBCPP_ROOT = ${SUPER_LIBRARY_ROOT}/libcpp
+LIBCPP_DIR_BESIDES  = \(
+LIBCPP_DIR_BESIDES += -path    ${LIBCPP_ROOT}/lib
+LIBCPP_DIR_BESIDES += -o -path ${LIBCPP_ROOT}/obj
+LIBCPP_DIR_BESIDES += \)
+LIBCPP_DIRS   = $(shell find $(LIBCPP_ROOT) $(LIBCPP_DIR_BESIDES) -prune -o -type d -print)
+
+LIBCPP_SOURCES_CC  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.c))
+LIBCPP_OBJECTS_CC  += $(patsubst %.cpp,obj/%.o,$(notdir ${LIBCPP_SOURCES_CC}))
+
+LIBCPP_SOURCES_PP  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
+LIBCPP_OBJECTS_PP  += $(patsubst %.cpp,obj/%.o,$(notdir ${LIBCPP_SOURCES_PP}))
+
 MODULE_NAME := kernel_syscall_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
 FLAGS       := -Wall -I /home/sparrow/alpine/inc
 KMOD_DIR    := $(shell pwd)
-
-ifdef SUPER_INCLUDE_PATH
-    
-endif
-
 MODULE_OBJECTS := ./src/module.o ./src/kernel.o ./src/echo.o ./src/support.cpp.o ./src/hook.cpp.o
 
 ccflags-y += $(FLAGS)
@@ -44,8 +53,15 @@ $(MODULE_NAME)-y := $(MODULE_OBJECTS)
 
 .PHONY: $(MODULE_NAME).ko
 $(MODULE_NAME).ko:
-	@echo SUPER
-	@echo ${SUPER_INCLUDE_PATH} 
+	@echo ************************SUPER************************
+	@echo ${SUPER_INCLUDE_PATH}
+	@echo ${SUPER_LIBRARY_PATH}
+	@echo ${SUPER_LIBRARY_ROOT}
+	@echo ${LIBCPP_SOURCES_CC}
+	@echo ${LIBCPP_OBJECTS_CC}
+	@echo ${LIBCPP_SOURCES_PP}
+	@echo ${LIBCPP_OBJECTS_PP}
+	@echo ************************SUPER************************
 	@echo building module
 	make -C $(KERNEL) M=$(KMOD_DIR) modules -larguments -lmodel -lcpp -L /home/sparrow/alpine/lib # https://blog.csdn.net/wang20122013/article/details/120718939
 
