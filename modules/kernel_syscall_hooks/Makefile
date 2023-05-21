@@ -9,6 +9,10 @@ KERNEL      := /lib/modules/$(shell uname -r)/build
 FLAGS       := -Wall -I /home/sparrow/alpine/inc
 KMOD_DIR    := $(shell pwd)
 
+ifdef SUPER_INCLUDE_PATH
+    
+endif
+echo ${SUPER_INCLUDE_PATH} 
 MODULE_OBJECTS := ./src/module.o ./src/kernel.o ./src/echo.o ./src/support.cpp.o ./src/hook.cpp.o
 
 ccflags-y += $(FLAGS)
