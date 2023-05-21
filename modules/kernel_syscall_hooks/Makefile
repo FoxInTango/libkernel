@@ -52,7 +52,7 @@ $(MODULE_NAME).ko:
 cxx-prefix := " $(HOSTCXX) [M]  "
 
 %.cpp.o: %.cpp
-@echo $(cxx-prefix)$@
+	@echo $(cxx-prefix)$@
 	@$(HOSTCXX) $(cxxflags) -c $< -o $@
 	@echo -n > $$(dirname $@)/.$$(basename $@).cmd
 
