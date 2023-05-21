@@ -18,6 +18,8 @@ LIBCPP_OBJECTS_CC  += $(patsubst %.c,obj/%.o,$(notdir ${LIBCPP_SOURCES_CC}))
 LIBCPP_SOURCES_PP  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
 LIBCPP_OBJECTS_PP  += $(patsubst %.cpp,obj/%.o,$(notdir ${LIBCPP_SOURCES_PP}))
 
+# core
+
 # module
 MODULE_ROOT = ./
 MODULE_DIR_BESIDES  = \(
@@ -68,13 +70,13 @@ $(MODULE_NAME)-y := $(MODULE_OBJECTS)
 .PHONY: $(MODULE_NAME).ko
 $(MODULE_NAME).ko:
 	@echo ************************SUPER************************
-	@echo ${SUPER_INCLUDE_PATH}
-	@echo ${SUPER_LIBRARY_PATH}
-	@echo ${SUPER_LIBRARY_ROOT}
-	@echo ${LIBCPP_SOURCES_CC}
-	@echo ${LIBCPP_OBJECTS_CC}
-	@echo ${LIBCPP_SOURCES_PP}
-	@echo ${LIBCPP_OBJECTS_PP}
+	@echo 上层头文件路径:     ${SUPER_INCLUDE_PATH}
+	@echo 上层库文件路径:     ${SUPER_LIBRARY_PATH}
+	@echo 上层库工程根目录:   ${SUPER_LIBRARY_ROOT}
+	@echo LIBCPP C源码:       ${LIBCPP_SOURCES_CC}
+	@echo LIBCPP 目标文件:    ${LIBCPP_OBJECTS_CC}
+	@echo LIBCPP C++源码:     ${LIBCPP_SOURCES_PP}
+	@echo LIBCPP C++目标文件: ${LIBCPP_OBJECTS_PP}
 	@echo ************************SUPER************************
 	@echo ${MODULE_SOURCES_CC}
 	@echo ${MODULE_OBJECTS_CC}
