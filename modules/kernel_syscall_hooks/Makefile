@@ -6,7 +6,7 @@
 
 MODULE_NAME := kernel_syscall_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
-FLAGS       := -Wall
+FLAGS       := -Wall -I /home/sparrow/alpine/inc
 KMOD_DIR    := $(shell pwd)
 
 MODULE_OBJECTS := ./src/module.o ./src/kernel.o ./src/echo.o ./src/support.cpp.o ./src/hook.cpp.o
@@ -41,7 +41,7 @@ $(MODULE_NAME)-y := $(MODULE_OBJECTS)
 .PHONY: $(MODULE_NAME).ko
 $(MODULE_NAME).ko:
 	@echo building module
-	make -C $(KERNEL) M=$(KMOD_DIR) modules -lcpp -L/home/sparrow/alpine/lib -I/home/sparrow/alpine/inc # https://blog.csdn.net/wang20122013/article/details/120718939
+	make -C $(KERNEL) M=$(KMOD_DIR) modules -lcpp -L /home/sparrow/alpine/lib # https://blog.csdn.net/wang20122013/article/details/120718939
 
 cxx-prefix := " $(HOSTCXX) [M]  "
 
