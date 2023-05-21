@@ -1,5 +1,5 @@
 #include "hook.h"
-#include "echo.h"
+#include "../../core/echo.h"
 
 #include <vector>
 #include <libarguments/libarguments.h>
