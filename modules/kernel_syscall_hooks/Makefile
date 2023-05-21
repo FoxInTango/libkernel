@@ -12,7 +12,7 @@ KMOD_DIR    := $(shell pwd)
 ifdef SUPER_INCLUDE_PATH
     
 endif
-echo ${SUPER_INCLUDE_PATH} 
+
 MODULE_OBJECTS := ./src/module.o ./src/kernel.o ./src/echo.o ./src/support.cpp.o ./src/hook.cpp.o
 
 ccflags-y += $(FLAGS)
@@ -44,8 +44,10 @@ $(MODULE_NAME)-y := $(MODULE_OBJECTS)
 
 .PHONY: $(MODULE_NAME).ko
 $(MODULE_NAME).ko:
-	@echo building module
-	make -C $(KERNEL) M=$(KMOD_DIR) modules -larguments -lmodel -lcpp -L /home/sparrow/alpine/lib # https://blog.csdn.net/wang20122013/article/details/120718939
+    @echo "SUPER PATH"
+    @echo ${SUPER_INCLUDE_PATH} 
+    @echo building module
+    make -C $(KERNEL) M=$(KMOD_DIR) modules -larguments -lmodel -lcpp -L /home/sparrow/alpine/lib # https://blog.csdn.net/wang20122013/article/details/120718939
 
 cxx-prefix := " $(HOSTCXX) [M]  "
 
