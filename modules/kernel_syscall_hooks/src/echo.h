@@ -2,8 +2,8 @@
  * Linux kernel logger for C and C++
  */
 
-#ifndef LOGGER_H
-#define LOGGER_H
+#ifndef _ECHO_H_foxintango
+#define _ECHO_H_foxintango
 
 #ifdef __cplusplus
 extern "C" {
