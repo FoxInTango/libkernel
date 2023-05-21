@@ -3,7 +3,7 @@
 #include <linux/moduleparam.h>
 #include <linux/kallsyms.h>
 #include "hook.h"
-#include "echo.h"
+#include "../echo.h"
 
 MODULE_AUTHOR("Dali Li");
 MODULE_LICENSE("GPL");

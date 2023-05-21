@@ -4,7 +4,9 @@
 # Oleg Kutkov, 2019
 #
 
-# libcpp
+# 参考 saosaole.com.cn:~/make 
+
+# ****************libcpp****************
 LIBCPP_ROOT = ${SUPER_LIBRARY_ROOT}/libcpp
 LIBCPP_DIR_BESIDES  = \(
 LIBCPP_DIR_BESIDES += -path    ${LIBCPP_ROOT}/lib
@@ -18,9 +20,21 @@ LIBCPP_OBJECTS_CC  += $(patsubst %.c,obj/%.o,$(notdir ${LIBCPP_SOURCES_CC}))
 LIBCPP_SOURCES_PP  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
 LIBCPP_OBJECTS_PP  += $(patsubst %.cpp,obj/%.o,$(notdir ${LIBCPP_SOURCES_PP}))
 
-# core
+# ****************core****************
+CORE_ROOT = ../core
+CORE_DIR_BESIDES  = \(
+CORE_DIR_BESIDES += -path    ${CORE_ROOT}/lib
+CORE_DIR_BESIDES += -o -path ${CORE_ROOT}/obj
+CORE_DIR_BESIDES += \)
+CORE_DIRS   = $(shell find $(CORE_ROOT) $(CORE_DIR_BESIDES) -prune -o -type d -print)
 
-# module
+CORE_SOURCES_CC  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.c))
+CORE_OBJECTS_CC  += $(patsubst %.c,obj/%.o,$(notdir ${MODULE_SOURCES_CC}))
+
+CORE_SOURCES_PP  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.cpp))
+CORE_OBJECTS_PP  += $(patsubst %.cpp,obj/%.o,$(notdir ${MODULE_SOURCES_PP}))
+
+# ****************module****************
 MODULE_ROOT = ./
 MODULE_DIR_BESIDES  = \(
 MODULE_DIR_BESIDES += -path    ${MODULE_ROOT}/lib
@@ -37,8 +51,8 @@ MODULE_OBJECTS_PP  += $(patsubst %.cpp,obj/%.o,$(notdir ${MODULE_SOURCES_PP}))
 MODULE_NAME := kernel_syscall_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
 FLAGS       := -Wall -I /home/sparrow/alpine/inc
-KMOD_DIR    := $(shell pwd)
-MODULE_OBJECTS := ./src/module.o ./src/kernel.o ./src/echo.o ./src/support.cpp.o ./src/hook.cpp.o
+KMOD_DIR    := $(shell pwd) 
+MODULE_OBJECTS := ./src/module.o ./src/hook.cpp.o #./src/kernel.o ./src/echo.o ./src/support.cpp.o
 
 ccflags-y += $(FLAGS)
 
@@ -68,7 +82,7 @@ obj-m += $(MODULE_NAME).o
 $(MODULE_NAME)-y := $(MODULE_OBJECTS)
 
 .PHONY: $(MODULE_NAME).ko
-$(MODULE_NAME).ko:
+$(MODULE_NAME).ko:${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
 	@echo ************************SUPER************************
 	@echo 上层头文件路径:     ${SUPER_INCLUDE_PATH}
 	@echo 上层库文件路径:     ${SUPER_LIBRARY_PATH}
@@ -82,7 +96,7 @@ $(MODULE_NAME).ko:
 	@echo ${MODULE_OBJECTS_CC}
 	@echo ${MODULE_SOURCES_PP}
 	@echo ${MODULE_OBJECTS_PP}
-	@echo building module
+	@echo ************************building module************************
 	make -C $(KERNEL) M=$(KMOD_DIR) modules # https://blog.csdn.net/wang20122013/article/details/120718939
 
 cxx-prefix := " $(HOSTCXX) [M]  "
@@ -92,6 +106,10 @@ cxx-prefix := " $(HOSTCXX) [M]  "
 	@$(HOSTCXX) $(cxxflags) -c $< -o $@
 	@echo -n > $$(dirname $@)/.$$(basename $@).cmd
 
+${CORE_OBJECTS_CC}:${CORE_SOURCES_CC}
+	@$(HOSTCXX) $(cxxflags) -c $< -o $(patsubst %.c,obj/%.o,$(notdir ${MODULE_SOURCES_PP}))
+${CORE_OBJECTS_PP}:${CORE_SOURCES_PP}
+	@$(HOSTCXX) $(cxxflags) -c $< -o $@
 .PHONY: clean
 clean:
 	@echo clean
