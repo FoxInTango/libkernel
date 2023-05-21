@@ -2,12 +2,15 @@
 #include "echo.h"
 
 #include <vector>
+#include <libcpp/libcpp.h>
 
 class Hook {
 public:
     std::vector<int> hook_array;
 public:
     Hook() { echo("Hook Here.\n"); 
+    foxintango::Array<int> int_array;
+    
     for(int i = 0;i < 10;i ++) {
         //hook_array.push_back(i);
     }
