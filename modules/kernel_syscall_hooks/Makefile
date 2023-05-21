@@ -13,10 +13,24 @@ LIBCPP_DIR_BESIDES += \)
 LIBCPP_DIRS   = $(shell find $(LIBCPP_ROOT) $(LIBCPP_DIR_BESIDES) -prune -o -type d -print)
 
 LIBCPP_SOURCES_CC  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.c))
-LIBCPP_OBJECTS_CC  += $(patsubst %.cpp,obj/%.o,$(notdir ${LIBCPP_SOURCES_CC}))
+LIBCPP_OBJECTS_CC  += $(patsubst %.c,obj/%.o,$(notdir ${LIBCPP_SOURCES_CC}))
 
 LIBCPP_SOURCES_PP  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
 LIBCPP_OBJECTS_PP  += $(patsubst %.cpp,obj/%.o,$(notdir ${LIBCPP_SOURCES_PP}))
+
+# module
+MODULE_ROOT = ./
+MODULE_DIR_BESIDES  = \(
+MODULE_DIR_BESIDES += -path    ${MODULE_ROOT}/lib
+MODULE_DIR_BESIDES += -o -path ${MODULE_ROOT}/obj
+MODULE_DIR_BESIDES += \)
+MODULE_DIRS   = $(shell find $(MODULE_ROOT) $(MODULE_DIR_BESIDES) -prune -o -type d -print)
+
+MODULE_SOURCES_CC  += $(foreach dir,$(MODULE_DIRS),$(wildcard $(dir)/*.c))
+MODULE_OBJECTS_CC  += $(patsubst %.c,obj/%.o,$(notdir ${MODULE_SOURCES_CC}))
+
+MODULE_SOURCES_PP  += $(foreach dir,$(MODULE_DIRS),$(wildcard $(dir)/*.cpp))
+MODULE_OBJECTS_PP  += $(patsubst %.cpp,obj/%.o,$(notdir ${MODULE_SOURCES_PP}))
 
 MODULE_NAME := kernel_syscall_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
@@ -62,8 +76,12 @@ $(MODULE_NAME).ko:
 	@echo ${LIBCPP_SOURCES_PP}
 	@echo ${LIBCPP_OBJECTS_PP}
 	@echo ************************SUPER************************
+	@echo ${MODULE_SOURCES_CC}
+	@echo ${MODULE_OBJECTS_CC}
+	@echo ${MODULE_SOURCES_PP}
+	@echo ${MODULE_OBJECTS_PP}
 	@echo building module
-	make -C $(KERNEL) M=$(KMOD_DIR) modules -larguments -lmodel -lcpp -L /home/sparrow/alpine/lib # https://blog.csdn.net/wang20122013/article/details/120718939
+	make -C $(KERNEL) M=$(KMOD_DIR) modules # https://blog.csdn.net/wang20122013/article/details/120718939
 
 cxx-prefix := " $(HOSTCXX) [M]  "
 
