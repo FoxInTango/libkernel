@@ -68,6 +68,7 @@ endif
 ifdef SUPER_LIBRARY_PATH
     LDFLAGS += -L${SUPER_LIBRARY_PATH}
 endif
+
 # 平台检测 -- DARWIN
 ifeq (${PLATFORM_ARCH},${PLATFORM_ARCH_DARWIN})
     TARGET_BIN_EXT         :=
