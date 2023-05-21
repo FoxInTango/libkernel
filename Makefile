@@ -102,6 +102,7 @@ endif
 
 TARGETS += kernel_syscall_hooks
 TARGETS += kernel_network_hooks
+TARGETS += kernel_filesystem_sm
 
 ALL : $(TARGETS)
 
@@ -120,7 +121,9 @@ $(TARGET_OBJECTS_PP):%.o:%.cpp
 kernel_syscall_hooks:
 	-cd ./modules/kernel_syscall_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
 kernel_network_hooks:
-#-cd ./modules/kernel_network_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
+	#-cd ./modules/kernel_network_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
+kernel_filesystem_sm:
+	#-cd ./modules/kernel_network_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
 
 clean   :
 	rm -f $(TARGET_OBJECTS_AS)
