@@ -101,13 +101,13 @@ $(MODULE_NAME).ko:${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
 
 cxx-prefix := " $(HOSTCXX) [M]  "
 
-%.cpp.o: %.cpp
-	@echo $(cxx-prefix)$@
-	@$(HOSTCXX) $(cxxflags) -c $< -o $@
-	@echo -n > $$(dirname $@)/.$$(basename $@).cmd
+#%.cpp.o: %.cpp
+#	@echo $(cxx-prefix)$@
+#	@$(HOSTCXX) $(cxxflags) -c $< -o $@
+#	@echo -n > $$(dirname $@)/.$$(basename $@).cmd
 
-#${CORE_OBJECTS_CC}:%.o:%.c
-#	@$(HOSTCXX) $(cxxflags) -c $< -o ./obj/$(notdir $@) # $(patsubst %.c,obj/%.o,$(notdir ${CORE_SOURCES_PP}))
+${CORE_OBJECTS_CC}:%.o:%.c
+	@$(HOSTCXX) $(cxxflags) -c $< -o ./obj/$(notdir $@) # $(patsubst %.c,obj/%.o,$(notdir ${CORE_SOURCES_PP}))
 ${CORE_OBJECTS_PP}:%.o:%.cpp
 	@$(HOSTCXX) $(cxxflags) -c $< -o ./obj/$(notdir $@)
 .PHONY: clean
