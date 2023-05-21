@@ -44,15 +44,15 @@ $(MODULE_NAME)-y := $(MODULE_OBJECTS)
 
 .PHONY: $(MODULE_NAME).ko
 $(MODULE_NAME).ko:
-    @echo "SUPER PATH"
-    @echo ${SUPER_INCLUDE_PATH} 
-    @echo building module
-    make -C $(KERNEL) M=$(KMOD_DIR) modules -larguments -lmodel -lcpp -L /home/sparrow/alpine/lib # https://blog.csdn.net/wang20122013/article/details/120718939
+	@echo SUPER
+	@echo ${SUPER_INCLUDE_PATH} 
+	@echo building module
+	make -C $(KERNEL) M=$(KMOD_DIR) modules -larguments -lmodel -lcpp -L /home/sparrow/alpine/lib # https://blog.csdn.net/wang20122013/article/details/120718939
 
 cxx-prefix := " $(HOSTCXX) [M]  "
 
 %.cpp.o: %.cpp
-	@echo $(cxx-prefix)$@
+@echo $(cxx-prefix)$@
 	@$(HOSTCXX) $(cxxflags) -c $< -o $@
 	@echo -n > $$(dirname $@)/.$$(basename $@).cmd
 
