@@ -11,7 +11,7 @@ public:
 public:
     Hook() { echo("Hook Here.\n"); 
     foxintango::Array<int> int_array;
-    foxintango::arguments args(0,0);
+    //foxintango::arguments args(0,0);
     for(int i = 0;i < 10;i ++) {
         //hook_array.push_back(i);
     }
