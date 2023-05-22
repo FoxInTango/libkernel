@@ -120,18 +120,21 @@ $(TARGET_OBJECTS_CC):%.o:%.c
 $(TARGET_OBJECTS_PP):%.o:%.cpp
 	$(CC) ${PPFLAGS} $< -o $@
 kernel_syscall_hooks:
+	-mkdir ../../lib/modules
 	-cd ./modules/kernel_syscall_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
 kernel_network_hooks:
+	#-mkdir ../../lib/modules
 	#-cd ./modules/kernel_network_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
 kernel_filesystem_sm:
+	#-mkdir ../../lib/modules
 	#-cd ./modules/kernel_filesystem_sm && $(MAKE) && cp ./*.ko ../../lib/modules
 
 clean   :
 	rm -f $(TARGET_OBJECTS_AS)
 	rm -f $(TARGET_OBJECTS_CC)
 	rm -f $(TARGET_OBJECTS_PP)
-	rm -rf ${TARGET_LIB_DIR}/*
-	rm -rf ${TARGET_BIN_DIR}/*
+	rm -f !(${TARGET_LIB_DIR}/modules) ${TARGET_LIB_DIR}/*
+	rm -f ${TARGET_BIN_DIR}/*
 	cd ./modules/kernel_syscall_hooks && $(MAKE) clean
 install :
 	rm -rf $(INSTALL_PATH_PREFIX)/include/$(TARGET_NAME)
