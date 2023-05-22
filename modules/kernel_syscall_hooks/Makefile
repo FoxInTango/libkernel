@@ -4,6 +4,8 @@
 # Oleg Kutkov, 2019
 #
 
+# https://www.kernel.org/doc/html/latest/kbuild/modules.html
+
 # 参考 saosaole.com.cn:~/make 
 
 # ****************libcpp****************
@@ -77,9 +79,10 @@ cxxflags = $(FLAGS) \
             -std=c++0x
 
 
-obj-m += $(MODULE_NAME).o
+obj-m := $(MODULE_NAME).o
 
 $(MODULE_NAME)-y := $(MODULE_OBJECTS)
+$(MODULE_NAME)-objs := $(MODULE_OBJECTS) # https://blog.csdn.net/wangzuxi/article/details/44730739
 
 .PHONY: $(MODULE_NAME).ko
 $(MODULE_NAME).ko:${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
