@@ -5,6 +5,7 @@
 #
 
 # https://www.kernel.org/doc/html/latest/kbuild/modules.html
+# https://www.kernel.org/doc/html/latest/kbuild/makefiles.html
 
 # 参考 saosaole.com.cn:~/make 
 
@@ -23,7 +24,7 @@ LIBCPP_SOURCES_PP  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
 LIBCPP_OBJECTS_PP  += $(patsubst %.cpp,%.o,$(notdir $(LIBCPP_SOURCES_PP)))
 
 # ****************core****************
-CORE_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))/../core
+CORE_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))../core
 CORE_DIR_BESIDES  = \(
 CORE_DIR_BESIDES += -path    ${CORE_ROOT}/lib
 CORE_DIR_BESIDES += -o -path ${CORE_ROOT}/obj
@@ -31,10 +32,10 @@ CORE_DIR_BESIDES += \)
 CORE_DIRS   = $(shell find $(CORE_ROOT) $(CORE_DIR_BESIDES) -prune -o -type d -print)
 
 CORE_SOURCES_CC  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.c))
-CORE_OBJECTS_CC  += $(patsubst %.c,%.o,$(CORE_SOURCES_CC)) #$(patsubst %.c,%.o,$(notdir ${MODULE_SOURCES_CC}))
+CORE_OBJECTS_CC  += $(patsubst %.c,%.o,,$(notdir $(CORE_SOURCES_CC)))
 
 CORE_SOURCES_PP  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.cpp))
-CORE_OBJECTS_PP  += $(patsubst %.c,%.o,$(CORE_SOURCES_PP)) #$(patsubst %.cpp,%.o,$(notdir ${MODULE_SOURCES_PP}))
+CORE_OBJECTS_PP  += $(patsubst %.cpp,%.o,,$(notdir $(CORE_SOURCES_PP)))
 
 # ****************module****************
 # MODULE_ROOT = ./
