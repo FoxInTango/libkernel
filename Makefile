@@ -101,6 +101,7 @@ ifeq ($(TARGET_TYPE_BIN),$(MK_TRUE))
 TARGETS += ${TARGET_BIN_DIR}/${TARGET_NAME}.${TARGET_BIN_EXT}
 endif
 
+TARGETS += mk_module_dir
 TARGETS += kernel_syscall_hooks
 TARGETS += kernel_network_hooks
 TARGETS += kernel_filesystem_sm
@@ -119,14 +120,13 @@ $(TARGET_OBJECTS_CC):%.o:%.c
 	$(CC) ${CCFLAGS} $< -o $@
 $(TARGET_OBJECTS_PP):%.o:%.cpp
 	$(CC) ${PPFLAGS} $< -o $@
-kernel_syscall_hooks:
+mk_module_dir:
 	-mkdir lib/modules
+kernel_syscall_hooks:
 	-cd ./modules/kernel_syscall_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
 kernel_network_hooks:
-	#-mkdir lib/modules
 	#-cd ./modules/kernel_network_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
 kernel_filesystem_sm:
-	#-mkdir ../../lib/modules
 	#-cd ./modules/kernel_filesystem_sm && $(MAKE) && cp ./*.ko ../../lib/modules
 
 clean   :
