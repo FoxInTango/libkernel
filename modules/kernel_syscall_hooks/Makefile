@@ -32,10 +32,10 @@ CORE_DIR_BESIDES += \)
 CORE_DIRS   = $(shell find $(CORE_ROOT) $(CORE_DIR_BESIDES) -prune -o -type d -print)
 
 CORE_SOURCES_CC  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.c))
-CORE_OBJECTS_CC  += $(patsubst %.c,%.o,,$(notdir $(CORE_SOURCES_CC)))
+CORE_OBJECTS_CC  += $(patsubst %.c,%.o,$(notdir $(CORE_SOURCES_CC)))
 
 CORE_SOURCES_PP  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.cpp))
-CORE_OBJECTS_PP  += $(patsubst %.cpp,%.o,,$(notdir $(CORE_SOURCES_PP)))
+CORE_OBJECTS_PP  += $(patsubst %.cpp,%.o,$(notdir $(CORE_SOURCES_PP)))
 
 # ****************module****************
 # MODULE_ROOT = ./
