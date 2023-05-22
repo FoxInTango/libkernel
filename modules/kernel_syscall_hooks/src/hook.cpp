@@ -11,7 +11,9 @@ public:
 public:
     Hook() { 
     echo("Hook Here.\n"); 
-    foxintango::Array<int> int_array;
+    foxintango::Array<int> *int_array = new foxintango::Array<int>();
+
+    if(int_array) { echo("foxintango::Array<int> allocated.\n");  }
     }
    ~Hook() { 
         echo("Hook Exited.\n");
