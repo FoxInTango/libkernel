@@ -65,7 +65,7 @@ MODULE_NAME := kernel_syscall_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
 FLAGS       := -Wall -I /home/sparrow/alpine/inc
 KMOD_DIR    := $(shell pwd) 
-MODULE_OBJECTS := ./src/module.o ./src/hook.cpp.o $(LIBCPP_OBJECTS) $(CORE_OBJECTS)#../core/echo.o ../core/kernel.o ../core/support.cpp.o
+MODULE_OBJECTS := ./src/module.o ./src/hook.cpp.o $(LIBCPP_OBJECTS) $(CORE_OBJECTS)
 
 ccflags-y += $(FLAGS)
 
@@ -112,6 +112,8 @@ $(MODULE_NAME).ko:
 	#@echo ${MODULE_OBJECTS_PP}
 	@echo ************************ building module ************************
 	make -C $(KERNEL) M=$(KMOD_DIR) modules # https://blog.csdn.net/wang20122013/article/details/120718939
+	rm $(LIBCPP_ROOT)/src/*.o
+	rm $(CORE_ROOT)/*.o
 
 cxx-prefix := " $(HOSTCXX) [M]  "
 
