@@ -33,10 +33,10 @@ CORE_DIR_BESIDES += \)
 CORE_DIRS   = $(shell find $(CORE_ROOT) $(CORE_DIR_BESIDES) -prune -o -type d -print)
 
 CORE_SOURCES_CC  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.c))
-CORE_OBJECTS_CC  += obj/$(patsubst %.c,%.o,$(notdir $(CORE_SOURCES_CC)))
+CORE_OBJECTS_CC  += obj/$(patsubst %.c,%.o,$(CORE_SOURCES_CC))
 
 CORE_SOURCES_PP  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.cpp))
-CORE_OBJECTS_PP  += obj/$(patsubst %.cpp,%.o,$(notdir $(CORE_SOURCES_PP)))
+CORE_OBJECTS_PP  += obj/$(patsubst %.cpp,%.o,$(CORE_SOURCES_PP))
 
 # ****************module****************
 # MODULE_ROOT = ./
@@ -84,7 +84,7 @@ cxxflags = $(FLAGS) \
 obj-m := $(MODULE_NAME).o core.o #libcpp.o
 
 $(MODULE_NAME)-y := $(MODULE_OBJECTS)
-core-y    += ${CORE_OBJECTS_PP}
+# core-y    += ${CORE_OBJECTS_PP}
 # libcpp-y  := ${LIBCPP_OBJECTS_CC} ${LIBCPP_OBJECTS_PP}
 # $(MODULE_NAME)-objs := $(MODULE_OBJECTS) # https://blog.csdn.net/wangzuxi/article/details/44730739
 
@@ -104,6 +104,7 @@ $(MODULE_NAME).ko:${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
 	@echo ${MODULE_SOURCES_PP}
 	@echo ${MODULE_OBJECTS_PP}
 	@echo ************************ building module ************************
+	make -C $KDIR M=$(CORE_ROOT) ./obj/$(notdir $@).o
 	make -C $(KERNEL) M=$(KMOD_DIR) modules # https://blog.csdn.net/wang20122013/article/details/120718939
 
 cxx-prefix := " $(HOSTCXX) [M]  "
