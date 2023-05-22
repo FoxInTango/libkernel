@@ -56,7 +56,7 @@ MODULE_NAME := kernel_syscall_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
 FLAGS       := -Wall -I /home/sparrow/alpine/inc
 KMOD_DIR    := $(shell pwd) 
-MODULE_OBJECTS := ./src/module.o ./src/hook.cpp.o ../core/echo.o ../core/kernel.o ../core/support.cpp.o
+MODULE_OBJECTS := ./src/module.o ./src/hook.cpp.o ../core/echo.o ../core/kernel.o ../core/support.cpp.o ${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
 
 ccflags-y += $(FLAGS)
 
@@ -90,6 +90,7 @@ $(MODULE_NAME)-y := $(MODULE_OBJECTS)
 
 .PHONY: $(MODULE_NAME).ko
 $(MODULE_NAME).ko:#${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
+	@echo ${MODULE_OBJECTS}
 	@echo ************************SUPER************************
 	@echo 上层头文件路径:     ${SUPER_INCLUDE_PATH}
 	@echo 上层库文件路径:     ${SUPER_LIBRARY_PATH}
