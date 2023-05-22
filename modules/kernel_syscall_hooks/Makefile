@@ -45,7 +45,7 @@ CORE_OBJECTS_CC  += $(CORE_RELATIVE)$(patsubst %.c,%.o,$(notdir $(CORE_SOURCES_C
 CORE_SOURCES_PP  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.cpp))
 CORE_OBJECTS_PP  += $(CORE_RELATIVE)$(patsubst %.cpp,%.cpp.o,$(notdir $(CORE_SOURCES_PP)))
 
-CORE_OBJECTS := ../core/echo.o ../core/kernel.o support.cpp.o
+CORE_OBJECTS := ../core/echo.o ../core/kernel.o ../core/support.cpp.o
 
 # ****************module****************
 # MODULE_ROOT = ./
