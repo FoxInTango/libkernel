@@ -89,7 +89,7 @@ core-y    += ${CORE_OBJECTS_PP}
 # $(MODULE_NAME)-objs := $(MODULE_OBJECTS) # https://blog.csdn.net/wangzuxi/article/details/44730739
 
 .PHONY: $(MODULE_NAME).ko
-$(MODULE_NAME).ko:#${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
+$(MODULE_NAME).ko:${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
 	@echo ************************SUPER************************
 	@echo 上层头文件路径:     ${SUPER_INCLUDE_PATH}
 	@echo 上层库文件路径:     ${SUPER_LIBRARY_PATH}
