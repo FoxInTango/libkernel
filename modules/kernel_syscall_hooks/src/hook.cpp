@@ -4,19 +4,18 @@
 #include <vector>
 #include <libarguments/libarguments.h>
 #include <libcpp/libcpp.h>
-
 class Hook {
 public:
     //std::vector<int> hook_array;
 public:
     Hook() { 
-    echo("Hook Here.\n"); 
+    echo("Hook Construct.\n"); 
     foxintango::Array<int> *int_array = new foxintango::Array<int>();
 
     if(int_array) { echo("foxintango::Array<int> allocated.\n");  }
     }
    ~Hook() { 
-        echo("Hook Exited.\n");
+        echo("Hook Distruct.\n");
    }
 };
 static Hook* hook = 0;
