@@ -14,15 +14,15 @@ LIBCPP_ROOT = ${SUPER_LIBRARY_ROOT}/libcpp
 LIBCPP_DIR_BESIDES  = \(
 LIBCPP_DIR_BESIDES += -path    ${LIBCPP_ROOT}/lib
 LIBCPP_DIR_BESIDES += -o -path ${LIBCPP_ROOT}/obj
-LIBCPP_DIR_BESIDES += -o -path ${LIBCPP_ROOT}/.*
+LIBCPP_DIR_BESIDES += -o -path ${LIBCPP_ROOT}/.trash
 LIBCPP_DIR_BESIDES += \)
 LIBCPP_DIRS   = $(shell find $(LIBCPP_ROOT) $(LIBCPP_DIR_BESIDES) -prune -o -type d -print)
 
 LIBCPP_SOURCES_CC  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.c))
-LIBCPP_OBJECTS_CC  += obj/$(patsubst %.c,%.o,$(notdir $(LIBCPP_SOURCES_CC)))
+LIBCPP_OBJECTS_CC  += ../../../libcpp/src/$(patsubst %.c,%.o,$(notdir $(LIBCPP_SOURCES_CC)))
 
 LIBCPP_SOURCES_PP  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
-LIBCPP_OBJECTS_PP  += obj/$(patsubst %.cpp,%.o,$(notdir $(LIBCPP_SOURCES_PP)))
+LIBCPP_OBJECTS_PP  += ../../../libcpp/src/$(patsubst %.cpp,%.o,$(notdir $(LIBCPP_SOURCES_PP)))
 
 # ****************core****************
 CORE_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))../core
