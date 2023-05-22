@@ -33,10 +33,10 @@ CORE_DIR_BESIDES += \)
 CORE_DIRS   = $(shell find $(CORE_ROOT) $(CORE_DIR_BESIDES) -prune -o -type d -print)
 
 CORE_SOURCES_CC  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.c))
-CORE_OBJECTS_CC  += obj/$(patsubst %.c,%.o,$(notdir $(CORE_SOURCES_CC)))
+CORE_OBJECTS_CC  += $(patsubst %.c,%.o,$(CORE_SOURCES_CC))
 
 CORE_SOURCES_PP  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.cpp))
-CORE_OBJECTS_PP  += obj/$(patsubst %.cpp,%.o,$(notdir $(CORE_SOURCES_PP)))
+CORE_OBJECTS_PP  += $(patsubst %.cpp,%.cpp.o,$(CORE_SOURCES_PP))
 
 # ****************module****************
 # MODULE_ROOT = ./
@@ -56,7 +56,7 @@ MODULE_NAME := kernel_syscall_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
 FLAGS       := -Wall -I /home/sparrow/alpine/inc
 KMOD_DIR    := $(shell pwd) 
-MODULE_OBJECTS := ./src/module.o ./src/hook.cpp.o ../core/echo.o ../core/kernel.o ../core/support.cpp.o #${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
+MODULE_OBJECTS := ./src/module.o ./src/hook.cpp.o ../core/echo.o ${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP} # ../core/kernel.o ../core/support.cpp.o 
 
 ccflags-y += $(FLAGS)
 
