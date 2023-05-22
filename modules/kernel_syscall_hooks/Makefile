@@ -19,10 +19,10 @@ LIBCPP_DIR_BESIDES += \)
 LIBCPP_DIRS   = $(shell find $(LIBCPP_ROOT) $(LIBCPP_DIR_BESIDES) -prune -o -type d -print)
 
 LIBCPP_SOURCES_CC  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.c))
-LIBCPP_OBJECTS_CC  += ./obj/$(patsubst %.c,%.o,$(notdir $(LIBCPP_SOURCES_CC)))
+LIBCPP_OBJECTS_CC  += obj/$(patsubst %.c,%.o,$(notdir $(LIBCPP_SOURCES_CC)))
 
 LIBCPP_SOURCES_PP  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
-LIBCPP_OBJECTS_PP  += ./obj/$(patsubst %.cpp,%.o,$(notdir $(LIBCPP_SOURCES_PP)))
+LIBCPP_OBJECTS_PP  += obj/$(patsubst %.cpp,%.o,$(notdir $(LIBCPP_SOURCES_PP)))
 
 # ****************core****************
 CORE_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))../core
@@ -33,10 +33,10 @@ CORE_DIR_BESIDES += \)
 CORE_DIRS   = $(shell find $(CORE_ROOT) $(CORE_DIR_BESIDES) -prune -o -type d -print)
 
 CORE_SOURCES_CC  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.c))
-CORE_OBJECTS_CC  += ./obj/$(patsubst %.c,%.o,$(notdir $(CORE_SOURCES_CC)))
+CORE_OBJECTS_CC  += obj/$(patsubst %.c,%.o,$(notdir $(CORE_SOURCES_CC)))
 
 CORE_SOURCES_PP  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.cpp))
-CORE_OBJECTS_PP  += ./obj/$(patsubst %.cpp,%.o,$(notdir $(CORE_SOURCES_PP)))
+CORE_OBJECTS_PP  += obj/$(patsubst %.cpp,%.o,$(notdir $(CORE_SOURCES_PP)))
 
 # ****************module****************
 # MODULE_ROOT = ./
