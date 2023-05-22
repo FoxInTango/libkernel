@@ -133,7 +133,7 @@ clean   :
 	rm -f $(TARGET_OBJECTS_AS)
 	rm -f $(TARGET_OBJECTS_CC)
 	rm -f $(TARGET_OBJECTS_PP)
-	rm -f !(${TARGET_LIB_DIR}/modules) ${TARGET_LIB_DIR}/*
+	rm -f ${TARGET_LIB_DIR}/*.a ${TARGET_LIB_DIR}/*.so
 	rm -f ${TARGET_BIN_DIR}/*
 	cd ./modules/kernel_syscall_hooks && $(MAKE) clean
 install :
