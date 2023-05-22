@@ -102,7 +102,7 @@ $(MODULE_NAME).ko:#${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
 	@echo ${MODULE_OBJECTS_CC}
 	@echo ${MODULE_SOURCES_PP}
 	@echo ${MODULE_OBJECTS_PP}
-	@echo ************************building module************************
+	@echo ************************ building module ************************
 	make -C $(KERNEL) M=$(KMOD_DIR) modules # https://blog.csdn.net/wang20122013/article/details/120718939
 
 cxx-prefix := " $(HOSTCXX) [M]  "
