@@ -7,23 +7,14 @@
 
 class Hook {
 public:
-    std::vector<int> hook_array;
+    //std::vector<int> hook_array;
 public:
-    Hook() { echo("Hook Here.\n"); 
+    Hook() { 
+    echo("Hook Here.\n"); 
     foxintango::Array<int> int_array;
-    //foxintango::arguments args(0,0);
-    for(int i = 0;i < 10;i ++) {
-        //hook_array.push_back(i);
     }
-    }
-   ~Hook() { echo("Hook Exited.\n");
-       int i = 0;
-       std::vector<int>::iterator iter = hook_array.begin();
-       while(iter != hook_array.end()){
-	    echo("Hook Array Element %d\n",i);
-	    i ++;
-           iter ++;
-       }
+   ~Hook() { 
+        echo("Hook Exited.\n");
    }
 };
 static Hook* hook = 0;
