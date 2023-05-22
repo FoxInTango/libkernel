@@ -121,6 +121,10 @@ cxx-prefix := " $(HOSTCXX) [M]  "
 # 	@$(HOSTCXX) $(cxxflags) -c ${CORE_ROOT}$(notdir $@).cpp -o $@
 
 .PHONY: clean
-clean:
+clean:cl_core cl_cpp
 	@echo clean
 	make -C $(KERNEL) M=$(KMOD_DIR) clean
+
+cl_core:
+	@echo clean core
+	@echo clean cpp
