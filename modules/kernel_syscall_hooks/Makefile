@@ -56,7 +56,7 @@ MODULE_NAME := kernel_syscall_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
 FLAGS       := -Wall -I /home/sparrow/alpine/inc
 KMOD_DIR    := $(shell pwd) 
-MODULE_OBJECTS := ./src/module.o ./src/hook.cpp.o ../core/echo.o ${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP} # ../core/kernel.o ../core/support.cpp.o 
+MODULE_OBJECTS := ./src/module.o ./src/hook.cpp.o ${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP} 
 
 ccflags-y += $(FLAGS)
 
@@ -113,12 +113,12 @@ cxx-prefix := " $(HOSTCXX) [M]  "
 	@$(HOSTCXX) $(cxxflags) -c $< -o $@
 	@echo -n > $$(dirname $@)/.$$(basename $@).cmd
 
-${CORE_OBJECTS_CC}:%.o:%.c
-	@echo "CORE_OBJECTS_CC"$@
-	@$(HOSTCXX) $(cxxflags) -c ${CORE_ROOT}$(notdir $@).c   -o $@ # $(patsubst %.c,obj/%.o,$(notdir ${CORE_SOURCES_PP}))
-${CORE_OBJECTS_PP}:%.o:%.cpp
-	@echo "CORE_OBJECTS_PP"$@
-	@$(HOSTCXX) $(cxxflags) -c ${CORE_ROOT}$(notdir $@).cpp -o $@
+# ${CORE_OBJECTS_CC}:%.o:%.c
+# 	@echo "CORE_OBJECTS_CC"$@
+# 	@$(HOSTCXX) $(cxxflags) -c ${CORE_ROOT}$(notdir $@).c   -o $@ # $(patsubst %.c,obj/%.o,$(notdir ${CORE_SOURCES_PP}))
+# ${CORE_OBJECTS_PP}:%.o:%.cpp
+# 	@echo "CORE_OBJECTS_PP"$@
+# 	@$(HOSTCXX) $(cxxflags) -c ${CORE_ROOT}$(notdir $@).cpp -o $@
 
 .PHONY: clean
 clean:
