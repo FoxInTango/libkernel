@@ -26,7 +26,9 @@ LIBCPP_SOURCES_CC  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.c))
 LIBCPP_OBJECTS_CC  += $(LIBCPP_RELATIVE)$(patsubst %.c,%.o,$(notdir $(LIBCPP_SOURCES_CC)))
 
 LIBCPP_SOURCES_PP  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
-LIBCPP_OBJECTS_PP  += $(LIBCPP_RELATIVE)$(patsubst %.cpp,%.o,$(notdir $(LIBCPP_SOURCES_PP)))
+LIBCPP_OBJECTS_PP  += $(LIBCPP_RELATIVE)$(patsubst %.cpp,%.cpp.o,$(notdir $(LIBCPP_SOURCES_PP)))
+
+LIBCPP_OBJECTS := ../../../libcpp/src/libcpp.cpp.o
 
 # ****************core****************
 CORE_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))../core
@@ -42,6 +44,8 @@ CORE_OBJECTS_CC  += $(CORE_RELATIVE)$(patsubst %.c,%.o,$(notdir $(CORE_SOURCES_C
 
 CORE_SOURCES_PP  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.cpp))
 CORE_OBJECTS_PP  += $(CORE_RELATIVE)$(patsubst %.cpp,%.cpp.o,$(notdir $(CORE_SOURCES_PP)))
+
+CORE_OBJECTS := ../core/echo.o ../core/kernel.o support.cpp.o
 
 # ****************module****************
 # MODULE_ROOT = ./
@@ -61,7 +65,7 @@ MODULE_NAME := kernel_syscall_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
 FLAGS       := -Wall -I /home/sparrow/alpine/inc
 KMOD_DIR    := $(shell pwd) 
-MODULE_OBJECTS := ./src/module.o ./src/hook.cpp.o $(LIBCPP_OBJECTS_CC) $(LIBCPP_OBJECTS_PP) $(CORE_OBJECTS_CC) $(CORE_OBJECTS_PP) #../core/echo.o ../core/kernel.o ../core/support.cpp.o
+MODULE_OBJECTS := ./src/module.o ./src/hook.cpp.o $(LIBCPP_OBJECTS) $(CORE_OBJECTS)#../core/echo.o ../core/kernel.o ../core/support.cpp.o
 
 ccflags-y += $(FLAGS)
 
