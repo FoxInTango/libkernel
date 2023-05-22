@@ -60,7 +60,7 @@ CORE_OBJECTS := ../core/echo.o ../core/kernel.o ../core/support.cpp.o
 # MODULE_SOURCES_PP  += $(foreach dir,$(MODULE_DIRS),$(wildcard $(dir)/*.cpp))
 # MODULE_OBJECTS_PP  += $(patsubst %.cpp,%.o,$(notdir ${MODULE_SOURCES_PP}))
 
-MODULE_NAME := kernel_syscall_hooks
+MODULE_NAME := kernel_filesystem_sm
 KERNEL      := /lib/modules/$(shell uname -r)/build
 FLAGS       := -Wall -I /home/sparrow/alpine/inc
 KMOD_DIR    := $(shell pwd) 
