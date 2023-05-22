@@ -120,10 +120,10 @@ $(TARGET_OBJECTS_CC):%.o:%.c
 $(TARGET_OBJECTS_PP):%.o:%.cpp
 	$(CC) ${PPFLAGS} $< -o $@
 kernel_syscall_hooks:
-	-mkdir ../../lib/modules
+	-mkdir lib/modules
 	-cd ./modules/kernel_syscall_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
 kernel_network_hooks:
-	#-mkdir ../../lib/modules
+	#-mkdir lib/modules
 	#-cd ./modules/kernel_network_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
 kernel_filesystem_sm:
 	#-mkdir ../../lib/modules
