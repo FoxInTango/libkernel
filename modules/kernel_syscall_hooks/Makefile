@@ -52,9 +52,9 @@ MODULE_OBJECTS_PP  += $(patsubst %.cpp,%.o,$(notdir ${MODULE_SOURCES_PP}))
 
 MODULE_NAME := kernel_syscall_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
-FLAGS       := -Wall #-I /home/sparrow/alpine/inc
+FLAGS       := -Wall -I /home/sparrow/alpine/inc
 KMOD_DIR    := $(shell pwd) 
-MODULE_OBJECTS := ./src/module.o ./src/hook.cpp.o ${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
+MODULE_OBJECTS := ./src/module.o ./src/hook.cpp.o # ${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
 
 ccflags-y += $(FLAGS)
 
@@ -85,7 +85,7 @@ $(MODULE_NAME)-y := $(MODULE_OBJECTS)
 # $(MODULE_NAME)-objs := $(MODULE_OBJECTS) # https://blog.csdn.net/wangzuxi/article/details/44730739
 
 .PHONY: $(MODULE_NAME).ko
-$(MODULE_NAME).ko:${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
+$(MODULE_NAME).ko:#${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
 	@echo ************************SUPER************************
 	@echo 上层头文件路径:     ${SUPER_INCLUDE_PATH}
 	@echo 上层库文件路径:     ${SUPER_LIBRARY_PATH}
