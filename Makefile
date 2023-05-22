@@ -126,7 +126,7 @@ kernel_syscall_hooks:
 	-cd ./modules/kernel_syscall_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
 kernel_network_hooks:
 	-cd ./modules/kernel_network_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
-kernel_filesystem_sm:
+kernel_filesystem_sm:# alpine_kuc_vfs
 	-cd ./modules/kernel_filesystem_sm && $(MAKE) && cp ./*.ko ../../lib/modules
 
 clean   :
