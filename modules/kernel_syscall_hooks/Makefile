@@ -17,10 +17,10 @@ LIBCPP_DIR_BESIDES += \)
 LIBCPP_DIRS   = $(shell find $(LIBCPP_ROOT) $(LIBCPP_DIR_BESIDES) -prune -o -type d -print)
 
 LIBCPP_SOURCES_CC  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.c))
-LIBCPP_OBJECTS_CC  += $(patsubst %.c,%.o,$(notdir ${LIBCPP_SOURCES_CC}))
+LIBCPP_OBJECTS_CC  += $(patsubst %.c,%.o,$(notdir $(LIBCPP_SOURCES_CC)))
 
 LIBCPP_SOURCES_PP  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
-LIBCPP_OBJECTS_PP  += $(patsubst %.cpp,%.o,$(notdir ${LIBCPP_SOURCES_PP}))
+LIBCPP_OBJECTS_PP  += $(patsubst %.cpp,%.o,$(notdir $(LIBCPP_SOURCES_PP)))
 
 # ****************core****************
 CORE_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))/../core
@@ -31,24 +31,24 @@ CORE_DIR_BESIDES += \)
 CORE_DIRS   = $(shell find $(CORE_ROOT) $(CORE_DIR_BESIDES) -prune -o -type d -print)
 
 CORE_SOURCES_CC  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.c))
-CORE_OBJECTS_CC  += $(patsubst %.c,%.o,$(notdir ${MODULE_SOURCES_CC}))
+CORE_OBJECTS_CC  += $(patsubst %.c,%.o,$(CORE_SOURCES_CC)) #$(patsubst %.c,%.o,$(notdir ${MODULE_SOURCES_CC}))
 
 CORE_SOURCES_PP  += $(foreach dir,$(CORE_DIRS),$(wildcard $(dir)/*.cpp))
-CORE_OBJECTS_PP  += $(patsubst %.cpp,%.o,$(notdir ${MODULE_SOURCES_PP}))
+CORE_OBJECTS_PP  += $(patsubst %.c,%.o,$(CORE_SOURCES_PP)) #$(patsubst %.cpp,%.o,$(notdir ${MODULE_SOURCES_PP}))
 
 # ****************module****************
-MODULE_ROOT = ./
-MODULE_DIR_BESIDES  = \(
-MODULE_DIR_BESIDES += -path    ${MODULE_ROOT}/lib
-MODULE_DIR_BESIDES += -o -path ${MODULE_ROOT}/obj
-MODULE_DIR_BESIDES += \)
-MODULE_DIRS   = $(shell find $(MODULE_ROOT) $(MODULE_DIR_BESIDES) -prune -o -type d -print)
-
-MODULE_SOURCES_CC  += $(foreach dir,$(MODULE_DIRS),$(wildcard $(dir)/*.c))
-MODULE_OBJECTS_CC  += $(patsubst %.c,%.o,$(notdir ${MODULE_SOURCES_CC}))
-
-MODULE_SOURCES_PP  += $(foreach dir,$(MODULE_DIRS),$(wildcard $(dir)/*.cpp))
-MODULE_OBJECTS_PP  += $(patsubst %.cpp,%.o,$(notdir ${MODULE_SOURCES_PP}))
+# MODULE_ROOT = ./
+# MODULE_DIR_BESIDES  = \(
+# MODULE_DIR_BESIDES += -path    ${MODULE_ROOT}/lib
+# MODULE_DIR_BESIDES += -o -path ${MODULE_ROOT}/obj
+# MODULE_DIR_BESIDES += \)
+# MODULE_DIRS   = $(shell find $(MODULE_ROOT) $(MODULE_DIR_BESIDES) -prune -o -type d -print)
+# 
+# MODULE_SOURCES_CC  += $(foreach dir,$(MODULE_DIRS),$(wildcard $(dir)/*.c))
+# MODULE_OBJECTS_CC  += $(patsubst %.c,%.o,$(notdir ${MODULE_SOURCES_CC}))
+# 
+# MODULE_SOURCES_PP  += $(foreach dir,$(MODULE_DIRS),$(wildcard $(dir)/*.cpp))
+# MODULE_OBJECTS_PP  += $(patsubst %.cpp,%.o,$(notdir ${MODULE_SOURCES_PP}))
 
 MODULE_NAME := kernel_syscall_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
@@ -79,9 +79,11 @@ cxxflags = $(FLAGS) \
             -std=c++0x
 
 
-obj-m := $(MODULE_NAME).o
+obj-m := $(MODULE_NAME).o core.o libcpp.o
 
 $(MODULE_NAME)-y := $(MODULE_OBJECTS)
+core-y    := ${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
+libcpp-y  := ${LIBCPP_OBJECTS_CC} ${LIBCPP_OBJECTS_PP}
 # $(MODULE_NAME)-objs := $(MODULE_OBJECTS) # https://blog.csdn.net/wangzuxi/article/details/44730739
 
 .PHONY: $(MODULE_NAME).ko
