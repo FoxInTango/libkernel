@@ -7,6 +7,9 @@
 # https://www.kernel.org/doc/html/latest/kbuild/modules.html
 # https://www.kernel.org/doc/html/latest/kbuild/makefiles.html
 
+# core-y    += ${CORE_OBJECTS_PP}
+# libcpp-y  := ${LIBCPP_OBJECTS_CC} ${LIBCPP_OBJECTS_PP}
+# $(MODULE_NAME)-objs := $(MODULE_OBJECTS) # https://blog.csdn.net/wangzuxi/article/details/44730739
 # 参考 saosaole.com.cn:~/make 
 
 # ****************libcpp****************
@@ -81,15 +84,12 @@ cxxflags = $(FLAGS) \
             -std=c++0x
 
 
-obj-m := $(MODULE_NAME).o #core.o #libcpp.o
+obj-m := $(MODULE_NAME).o
 
 $(MODULE_NAME)-y := $(MODULE_OBJECTS)
-# core-y    += ${CORE_OBJECTS_PP}
-# libcpp-y  := ${LIBCPP_OBJECTS_CC} ${LIBCPP_OBJECTS_PP}
-# $(MODULE_NAME)-objs := $(MODULE_OBJECTS) # https://blog.csdn.net/wangzuxi/article/details/44730739
 
 .PHONY: $(MODULE_NAME).ko
-$(MODULE_NAME).ko:#${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
+$(MODULE_NAME).ko:
 	@echo ${MODULE_OBJECTS}
 	@echo ************************SUPER************************
 	@echo 上层头文件路径:     ${SUPER_INCLUDE_PATH}
