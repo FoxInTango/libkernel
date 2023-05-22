@@ -52,7 +52,7 @@ MODULE_OBJECTS_PP  += $(patsubst %.cpp,%.o,$(notdir ${MODULE_SOURCES_PP}))
 
 MODULE_NAME := kernel_syscall_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
-FLAGS       := -Wall -I /home/sparrow/alpine/inc
+FLAGS       := -Wall #-I /home/sparrow/alpine/inc
 KMOD_DIR    := $(shell pwd) 
 MODULE_OBJECTS := ./src/module.o ./src/hook.cpp.o ${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
 
