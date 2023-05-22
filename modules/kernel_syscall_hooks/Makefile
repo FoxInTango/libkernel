@@ -80,11 +80,11 @@ cxxflags = $(FLAGS) \
             -std=c++0x
 
 
-obj-m := $(MODULE_NAME).o core.o libcpp.o
+obj-m := $(MODULE_NAME).o core.o #libcpp.o
 
 $(MODULE_NAME)-y := $(MODULE_OBJECTS)
 core-y    := ${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
-libcpp-y  := ${LIBCPP_OBJECTS_CC} ${LIBCPP_OBJECTS_PP}
+# libcpp-y  := ${LIBCPP_OBJECTS_CC} ${LIBCPP_OBJECTS_PP}
 # $(MODULE_NAME)-objs := $(MODULE_OBJECTS) # https://blog.csdn.net/wangzuxi/article/details/44730739
 
 .PHONY: $(MODULE_NAME).ko
@@ -113,10 +113,10 @@ cxx-prefix := " $(HOSTCXX) [M]  "
 	@echo -n > $$(dirname $@)/.$$(basename $@).cmd
 
 ${CORE_OBJECTS_CC}:%.o:%.c
-	@$(HOSTCXX) $(cxxflags) -c $< -o ./src/$(notdir $@) # $(patsubst %.c,obj/%.o,$(notdir ${CORE_SOURCES_PP}))
+	@$(HOSTCXX) $(cxxflags) -c $< -o ./../core/$(notdir $@) # $(patsubst %.c,obj/%.o,$(notdir ${CORE_SOURCES_PP}))
 ${CORE_OBJECTS_PP}:%.o:%.cpp
 	@echo $(cxx-prefix)$@
-	@$(HOSTCXX) $(cxxflags) -c $< -o ./src/$(notdir $@)
+	@$(HOSTCXX) $(cxxflags) -c $< -o ./../core/$(notdir $@)
 
 .PHONY: clean
 clean:
