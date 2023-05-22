@@ -114,9 +114,10 @@ cxx-prefix := " $(HOSTCXX) [M]  "
 	@echo -n > $$(dirname $@)/.$$(basename $@).cmd
 
 ${CORE_OBJECTS_CC}:%.o:%.c
+	@echo "CORE_OBJECTS_CC"$@
 	@$(HOSTCXX) $(cxxflags) -c ./../core/$(notdir $@).c   -o $@ # $(patsubst %.c,obj/%.o,$(notdir ${CORE_SOURCES_PP}))
 ${CORE_OBJECTS_PP}:%.o:%.cpp
-	@echo $(cxx-prefix)$@
+	@echo "CORE_OBJECTS_PP"$@
 	@$(HOSTCXX) $(cxxflags) -c ./../core/$(notdir $@).cpp -o $@
 
 .PHONY: clean
