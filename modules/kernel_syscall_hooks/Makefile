@@ -84,7 +84,7 @@ cxxflags = $(FLAGS) \
 obj-m := $(MODULE_NAME).o core.o #libcpp.o
 
 $(MODULE_NAME)-y := $(MODULE_OBJECTS)
-core-y    := ${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
+core-y    += ${CORE_OBJECTS_PP}
 # libcpp-y  := ${LIBCPP_OBJECTS_CC} ${LIBCPP_OBJECTS_PP}
 # $(MODULE_NAME)-objs := $(MODULE_OBJECTS) # https://blog.csdn.net/wangzuxi/article/details/44730739
 
