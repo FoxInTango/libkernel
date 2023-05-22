@@ -14,6 +14,7 @@ LIBCPP_ROOT = ${SUPER_LIBRARY_ROOT}/libcpp
 LIBCPP_DIR_BESIDES  = \(
 LIBCPP_DIR_BESIDES += -path    ${LIBCPP_ROOT}/lib
 LIBCPP_DIR_BESIDES += -o -path ${LIBCPP_ROOT}/obj
+LIBCPP_DIR_BESIDES += -o -path ${LIBCPP_ROOT}/.*
 LIBCPP_DIR_BESIDES += \)
 LIBCPP_DIRS   = $(shell find $(LIBCPP_ROOT) $(LIBCPP_DIR_BESIDES) -prune -o -type d -print)
 
