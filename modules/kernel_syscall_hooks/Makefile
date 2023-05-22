@@ -82,7 +82,7 @@ cxxflags = $(FLAGS) \
 obj-m := $(MODULE_NAME).o
 
 $(MODULE_NAME)-y := $(MODULE_OBJECTS)
-$(MODULE_NAME)-objs := $(MODULE_OBJECTS) # https://blog.csdn.net/wangzuxi/article/details/44730739
+# $(MODULE_NAME)-objs := $(MODULE_OBJECTS) # https://blog.csdn.net/wangzuxi/article/details/44730739
 
 .PHONY: $(MODULE_NAME).ko
 $(MODULE_NAME).ko:${CORE_OBJECTS_CC} ${CORE_OBJECTS_PP}
