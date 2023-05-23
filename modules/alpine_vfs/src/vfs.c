@@ -126,7 +126,7 @@ static struct dentry* alpine_create_dir(struct super_block* sb,
     struct qstr qname;
     qname.name = name;
     qname.len = strlen(name);
-    qname.hash = full_name_hash(&ALPINE_SALT，name, qname.len);
+    qname.hash = full_name_hash(&ALPINE_SALT,name, qname.len);
     /**
      * dentry的主要作用是建立文件名和inode之间的关联。
      * 所以该结构体包括两个最主要的字段，d_inode和d_name。
