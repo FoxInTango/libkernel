@@ -23,7 +23,7 @@
 /** From : https://www.cnblogs.com/wangzahngjun/p/5365310.html
  */
 #define ALPINE_MAGIC 0x20220523
-static unsigned long ALPINE_SALT = 22355153；
+static unsigned long ALPINE_SALT = 22355153;
 
 static struct inode* alpine_make_inode(struct super_block* sb, int mode)
 {
