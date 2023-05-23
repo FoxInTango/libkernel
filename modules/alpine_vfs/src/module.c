@@ -8,24 +8,14 @@
 MODULE_AUTHOR("Dali Li");
 MODULE_LICENSE("GPL");
 
-//module_param(nbr,int,S_IRUGO);
-
-static int __init this_module_init(void)          /* 加载模块时自动执行 */
+static int __init this_module_init(void)
 {
-    echo("kernel_filesystem_sm inited.\n");
-    unsigned long* sys_call_table;
-
-    // 获取 sys_call_table 的虚拟内存地址
-    sys_call_table = (unsigned long*)kallsyms_lookup_name("sys_call_table");
-    echo("sys_call_table address %p\n", sys_call_table);
-    cpp_on_init();
-    return 0;
+    return vfs_init();
 }
 
 static void __exit this_module_exit(void)
 {
-    cpp_on_exit();
-    echo("kernel_filesystem_sm exited.\n");
+    vfs_exit();
 }
 
 module_init(this_module_init);

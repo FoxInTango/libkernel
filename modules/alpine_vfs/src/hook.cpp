@@ -24,24 +24,20 @@
 #include <asm/uaccess.h>
 
 #include <vector>
-class Hook {
+class AlpineVFS {
+private:
+    file_system_type type;
 public:
-    //std::vector<int> hook_array;
-public:
-    Hook() { 
-    echo("Hook Construct.\n"); 
-    foxintango::Array<int> *int_array = new foxintango::Array<int>();
-
-    if(int_array) { echo("foxintango::Array<int> allocated.\n");  delete int_array; }
+    AlpineVFS() {
     }
-   ~Hook() { 
-        echo("Hook Distruct.\n");
+   ~AlpineVFS() {
    }
 };
-static Hook* hook = 0;
-void cpp_on_init(void) {
-    hook = new Hook();
+
+static AlpineVFS* alpine_vfs = 0;
+int vfs_init(void) {
+    alpine_vfs = new AlpineVFS();
 }
-void cpp_on_exit(void){
-    if(hook) delete hook;
+void vfs_exit(void){
+    if(alpine_vfs) delete hook;
 }

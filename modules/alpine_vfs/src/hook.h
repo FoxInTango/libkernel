@@ -5,8 +5,8 @@
 extern "C" {
 #endif
 
-void cpp_on_init(void);
-void cpp_on_exit(void);
+int  vfs_init(void);
+void vfs_exit(void);
 
 #ifdef __cplusplus
 }
