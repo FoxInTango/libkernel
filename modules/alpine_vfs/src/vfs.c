@@ -20,6 +20,8 @@
 #include <linux/seq_file.h>
 #include <asm/uaccess.h>
 
+#include <time.h>
+
 /** From : https://www.cnblogs.com/wangzahngjun/p/5365310.html
  */
 #define ALPINE_MAGIC 0x20220523
