@@ -102,9 +102,10 @@ TARGETS += ${TARGET_BIN_DIR}/${TARGET_NAME}.${TARGET_BIN_EXT}
 endif
 
 TARGETS += mk_module_dir
-TARGETS += kernel_syscall_hooks
-TARGETS += kernel_network_hooks
-TARGETS += kernel_filesystem_sm
+TARGETS += alpine_syscall_hooks
+TARGETS += alpine_network_hooks
+TARGETS += alpine_vfs
+TARGETS += alpine_vnw
 
 ALL : $(TARGETS)
 
@@ -122,12 +123,15 @@ $(TARGET_OBJECTS_PP):%.o:%.cpp
 	$(CC) ${PPFLAGS} $< -o $@
 mk_module_dir:
 	-mkdir lib/modules
-kernel_syscall_hooks:
-	-cd ./modules/kernel_syscall_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
-kernel_network_hooks:
-	-cd ./modules/kernel_network_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
-kernel_filesystem_sm:# alpine_kuc_vfs
-	-cd ./modules/kernel_filesystem_sm && $(MAKE) && cp ./*.ko ../../lib/modules
+alpine_syscall_hooks:
+	-cd ./modules/alpine_syscall_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
+alpine_network_hooks:
+	-cd ./modules/alpine_network_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
+alpine_vfs:
+	-cd ./modules/alpine_vfs && $(MAKE) && cp ./*.ko ../../lib/modules
+alpine_vnw:
+	-cd ./modules/alpine_vnw && $(MAKE) && cp ./*.ko ../../lib/modules
+
 
 clean   :
 	rm -f $(TARGET_OBJECTS_AS)
