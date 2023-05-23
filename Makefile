@@ -139,7 +139,10 @@ clean   :
 	rm -f $(TARGET_OBJECTS_PP)
 	rm -f ${TARGET_LIB_DIR}/*.a ${TARGET_LIB_DIR}/*.so
 	rm -f ${TARGET_BIN_DIR}/*
-	cd ./modules/kernel_syscall_hooks && $(MAKE) clean
+	cd ./modules/alpine_syscall_hooks && $(MAKE) clean
+	cd ./modules/alpine_syscall_hooks && $(MAKE) clean
+	cd ./modules/alpine_vfs && $(MAKE) clean
+	cd ./modules/alpine_vnw && $(MAKE) clean
 install :
 	rm -rf $(INSTALL_PATH_PREFIX)/include/$(TARGET_NAME)
 	rm -rf $(INSTALL_PATH_PREFIX)/lib/$(TARGET_NAME).*
