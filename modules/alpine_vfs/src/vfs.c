@@ -22,15 +22,19 @@
 
 /** From : https://www.cnblogs.com/wangzahngjun/p/5365310.html
  */
+#define ALPINE_MAGIC 0x20220523
+static unsigned long ALPINE_SALT = 22355153；
 
 static struct inode* alpine_make_inode(struct super_block* sb, int mode)
 {
     struct inode* ret = new_inode(sb);
     if (ret) {
+        struct timespec current_time;
+        clock_gettime(CLOCK_REALTIME, &current_time);
         ret->i_mode = mode;
-        ret->i_uid = ret->i_gid = 0;
+        ret->i_uid.val = ret->i_gid.val = 0;
         ret->i_blocks = 0;
-        ret->i_atime = ret->i_mtime = ret->i_ctime = CURRENT_TIME;
+        ret->i_atime = ret->i_mtime = ret->i_ctime = current_time;
     }
     return ret;
 }
@@ -96,7 +100,7 @@ static struct dentry* alpine_create_file(struct super_block* sb,struct dentry* d
 
     qname.name = name;
     qname.len = strlen(name);
-    qname.hash = full_name_hash(name, qname.len);
+    qname.hash = full_name_hash(&ALPINE_SALT,name, qname.len);
 
     dentry = d_alloc(dir, &qname);
     if (!dentry)
@@ -122,7 +126,7 @@ static struct dentry* alpine_create_dir(struct super_block* sb,
     struct qstr qname;
     qname.name = name;
     qname.len = strlen(name);
-    qname.hash = full_name_hash(name, qname.len);
+    qname.hash = full_name_hash(&ALPINE_SALT，name, qname.len);
     /**
      * dentry的主要作用是建立文件名和inode之间的关联。
      * 所以该结构体包括两个最主要的字段，d_inode和d_name。
@@ -169,10 +173,13 @@ static int alpine_fill_super(struct super_block* sb, void* data, int silent)
     struct inode* root;
     struct dentry* root_dentry;
 
-    sb->s_blocksize = PAGE_CACHE_SIZE;
-    sb->s_blocksize_bits = PAGE_CACHE_SHIFT;
-    sb->s_magic = wzjfs_MAGIC;
-    sb->s_op = &wzjfs_s_ops;
+    /**
+     * 这两个是什么玩意儿？ 
+     */
+    //sb->s_blocksize = PAGE_CACHE_SIZE;
+    //sb->s_blocksize_bits = PAGE_CACHE_SHIFT;
+    sb->s_magic = ALPINE_MAGIC;
+    sb->s_op = &alpine_s_ops;
 
     printk(KERN_INFO "alpine_fill_super is here\n");
     root = alpine_make_inode(sb, S_IFDIR | 0755);
