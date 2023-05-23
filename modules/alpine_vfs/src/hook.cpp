@@ -4,16 +4,6 @@
 #include <libarguments/libarguments.h>
 #include <libcpp/libcpp.h>
 
-#include <linux/module.h>
-#include <linux/string.h>
-#include <linux/fs.h>
-#include <linux/time.h>
-#include <linux/slab.h>
-#include <linux/init.h>
-#include <linux/blkdev.h>
-#include <linux/parser.h>
-#include <linux/smp_lock.h>
-#include <linux/buffer_head.h>
 #include <linux/exportfs.h>
 #include <linux/vfs.h>
 #include <linux/random.h>
