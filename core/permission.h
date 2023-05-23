@@ -4,4 +4,10 @@
 typedef struct _filesystem_permission{}filesystem_permission;
 typedef struct _network_permission{}network_permission;
 
+typedef struct _permission{
+    filesystem_permission filesystem;
+    network_permission    network;
+}permission;
+
+
 #endif
