@@ -114,6 +114,56 @@ out:
     return 0;
 }
 
+static struct dentry* alpine_create_dir(struct super_block* sb,
+    struct dentry* parent, const char* name)
+{
+    struct dentry* dentry;
+    struct inode* inode;
+    struct qstr qname;
+    qname.name = name;
+    qname.len = strlen(name);
+    qname.hash = full_name_hash(name, qname.len);
+    /**
+     * dentry的主要作用是建立文件名和inode之间的关联。
+     * 所以该结构体包括两个最主要的字段，d_inode和d_name。
+     * 其中，d_name为文件名。qstr是内核对字符串的封装（可以理解为带有散列值的char*）。
+     * d_inode是与该文件名对应的inode。
+     */
+    dentry = d_alloc(parent, &qname);
+    if (!dentry)
+        goto out;
+    inode = alpine_make_inode(sb, S_IFDIR | 0644);
+    if (!inode)
+        goto out_dput;
+    inode->i_op = &simple_dir_inode_operations;
+    inode->i_fop = &simple_dir_operations;
+    d_add(dentry, inode);
+    return dentry;
+out_dput:
+    dput(dentry);
+out:
+    return 0;
+}
+
+static atomic_t counter, subcounter;
+static void alpine_create_files(struct super_block* sb, struct dentry* root)
+{
+    struct dentry* subdir;
+
+    atomic_set(&counter, 0);
+    alpine_create_file(sb, root, "counter", &counter);
+
+    atomic_set(&subcounter, 0);
+    subdir = alpine_create_dir(sb, root, "subdir");
+    if (subdir)
+        alpine_create_file(sb, subdir, "subcounter", &subcounter);
+}
+
+static struct super_operations alpine_s_ops = {
+        .statfs = simple_statfs,
+        .drop_inode = generic_delete_inode,
+};
+
 static int alpine_fill_super(struct super_block* sb, void* data, int silent)
 {
     struct inode* root;
@@ -128,7 +178,7 @@ static int alpine_fill_super(struct super_block* sb, void* data, int silent)
     root = alpine_make_inode(sb, S_IFDIR | 0755);
     if (!root)
         goto out;
-    root->i_op = &simple_dir_inode_operations;
+    root->i_op  = &simple_dir_inode_operations;
     root->i_fop = &simple_dir_operations;
 
     root_dentry = d_alloc_root(root);
@@ -151,15 +201,16 @@ static int alpine_get_super(struct file_system_type* fst, int flags, const char*
 }
 
 static struct file_system_type alpine_vfs_type = {
-        .owner = THIS_MODULE,
-        .name = "alpine",
-        .get_sb = alpine_get_super,
+        .owner   = THIS_MODULE,
+        .name    = "alpine",
+        .get_sb  = alpine_get_super,
         .kill_sb = kill_litter_super,
 };
 
 int vfs_init(void) {
-    
+    return register_filesystem(&alpine_vfs_type);
 }
 
 void vfs_exit(void){
+    unregister_filesystem(&alpine_vfs_type);
 }
