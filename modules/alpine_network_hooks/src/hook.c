@@ -23,7 +23,7 @@ static struct nf_hook_ops alpine_network_hook = {
         .pf       = NFPROTO_IPV4,
         .hooknum  = NF_INET_PRE_ROUTING,
         .priority = NF_IP_PRI_CONNTRACK,
-} 
+};
 /*
 {
     {
@@ -65,7 +65,7 @@ static struct nf_hook_ops alpine_network_hook = {
 }
 */
 int alpine_network_hook_startup(void){
-    return nf_register_net_hook(alpine_network_hook); /* &&
+    return nf_register_net_hook(&init_net,alpine_network_hook); /* &&
         nf_register_net_hook(alpine_network_hooks[1]) &&
         nf_register_net_hook(alpine_network_hooks[2]) &&
         nf_register_net_hook(alpine_network_hooks[3]) &&
