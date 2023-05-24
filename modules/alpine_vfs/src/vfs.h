@@ -5,8 +5,8 @@
 extern "C" {
 #endif
 
-int  vfs_init(void);
-void vfs_exit(void);
+int  alpine_vfs_init(void);
+void alpine_vfs_exit(void);
 
 #ifdef __cplusplus
 }

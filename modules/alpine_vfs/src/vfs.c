@@ -6,29 +6,29 @@
 #include <linux/moduleparam.h>
 #include <linux/kallsyms.h>
 
-unsigned int vfs_open(){ return 0;}
-EXPORT_SYMBOL(vfs_open);
-unsigned int vfs_seek() { return 0; }
-EXPORT_SYMBOL(vfs_seek);
-unsigned int vfs_read() { return 0; }
-EXPORT_SYMBOL(vfs_read);
-unsigned int vfs_write() { return 0; }
-EXPORT_SYMBOL(vfs_write);
+unsigned int alpine_vfs_open(){ return 0;}
+EXPORT_SYMBOL(alpine_vfs_open);
+unsigned int alpine_vfs_seek() { return 0; }
+EXPORT_SYMBOL(alpine_vfs_seek);
+unsigned int alpine_vfs_read() { return 0; }
+EXPORT_SYMBOL(alpine_vfs_read);
+unsigned int alpine_vfs_write() { return 0; }
+EXPORT_SYMBOL(alpine_vfs_write);
 
-int vfs_mkdir(){ return 0; }
-EXPORT_SYMBOL(vfs_mkdir);
-int vfs_rmdir(){ return 0; }
-EXPORT_SYMBOL(vfs_rmdir);
+int alpine_vfs_mkdir(){ return 0; }
+EXPORT_SYMBOL(alpine_vfs_mkdir);
+int alpine_vfs_rmdir(){ return 0; }
+EXPORT_SYMBOL(alpine_vfs_rmdir);
 
-int vfs_mklink(){ return 0; }
-EXPORT_SYMBOL(vfs_mklink);
-int vfs_rmlink(){ return 0; }
-EXPORT_SYMBOL(vfs_rmlink);
+int alpine_vfs_mklink(){ return 0; }
+EXPORT_SYMBOL(alpine_vfs_mklink);
+int alpine_vfs_rmlink(){ return 0; }
+EXPORT_SYMBOL(alpine_vfs_rmlink);
 
-int vfs_init(void) {
+int alpine_vfs_init(void) {
     
 }
 
-void vfs_exit(void){
+void alpine_vfs_exit(void){
 
 }
