@@ -27,7 +27,7 @@ int alpine_vfs_rmlink(void){ return 0; }
 EXPORT_SYMBOL(alpine_vfs_rmlink);
 
 int alpine_vfs_init(void) {
-    
+    return 0;
 }
 
 void alpine_vfs_exit(void){
