@@ -65,7 +65,7 @@ static struct nf_hook_ops alpine_network_hook = {
 }
 */
 int alpine_network_hook_startup(void){
-    return nf_register_net_hook(&init_net,alpine_network_hook); /* &&
+    return nf_register_net_hook(&init_net,&alpine_network_hook); /* &&
         nf_register_net_hook(alpine_network_hooks[1]) &&
         nf_register_net_hook(alpine_network_hooks[2]) &&
         nf_register_net_hook(alpine_network_hooks[3]) &&
@@ -74,7 +74,7 @@ int alpine_network_hook_startup(void){
         ) ? 1:0;*/
 }
 void alpine_network_hook_shutdown(void){
-    nf_unregister_net_hook(alpine_network_hook);
+    nf_unregister_net_hook(&init_net,&alpine_network_hook);
 }
 
 // 钩子返回值 https://blog.csdn.net/weixin_41400449/article/details/106764232
