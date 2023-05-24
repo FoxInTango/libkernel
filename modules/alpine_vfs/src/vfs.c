@@ -1,3 +1,4 @@
+#define ALPINE_VFS_IMPLEMENT
 #include "vfs.h"
 #include "../../core/echo.h"
 
