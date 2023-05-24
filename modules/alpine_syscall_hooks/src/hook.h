@@ -5,8 +5,8 @@
 extern "C" {
 #endif
 
-void cpp_on_init(void);
-void cpp_on_exit(void);
+int alpine_network_hook_startup(void);
+void alpine_network_hook_shutdown(void);
 
 #ifdef __cplusplus
 }
