@@ -13,7 +13,7 @@
 
 unsigned int alpine_ipv4_in(unsigned int hooknum, struct sk_buff* skb, const struct net_device* in, const struct net_device* out, int(*okfn)(struct sk_buff*)){}
 {
-    return 0;
+    return 1;
 };
 
 static struct nf_hook_ops alpine_network_hooks[] = {
