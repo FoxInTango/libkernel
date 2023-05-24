@@ -13,6 +13,7 @@
 
 unsigned int alpine_ipv4_in(unsigned int hooknum, struct sk_buff* skb, const struct net_device* in, const struct net_device* out, int(*okfn)(struct sk_buff*)){}
 {
+    echo("alpine ipv4 hooking.\n");
     return 1;
 };
 
