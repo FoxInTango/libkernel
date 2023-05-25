@@ -55,9 +55,8 @@ void make_syscall_table_ro(void){}
 long unsigned int replace_syscall_item(unsigned int index, long unsigned int value){ return 0; }
 
 ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count){
-    echo("alpine_ksys_read.\n");
-    return 0;
-    ksys_read_func real_read = 0;
+    ksys_read_func real_read;
+    //echo("alpine_ksys_read.\n");
     real_read = (ksys_read_func)original_syscall_table[__NR_read];
     return real_read(fd, buf,count);
 }
