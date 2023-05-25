@@ -42,7 +42,7 @@
 */
 typedef long unsigned int hook_func_address;
 
-typedef ssize_t(*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
+typedef ssize_t (*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
 
 typedef struct  _hook_s {
     unsigned int index;
@@ -61,14 +61,12 @@ ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count) {
     return r;
 }
 
-
-
 static hook_s alpine_syscall_hooks[] = {
     {
-        .index   = __NR_read;
-        .address = alpine_ksys_read;
+        .index   = __NR_read,
+        .address = alpine_ksys_read,
     },
-}
+};
 
 long unsigned int* lookup_syscall_table(void){
     return (long unsigned int*)kallsyms_lookup_name("sys_call_table");
