@@ -124,20 +124,20 @@ $(TARGET_OBJECTS_PP):%.o:%.cpp
 mk_module_dir:
 	-mkdir lib/modules
 alpine_syscall_hooks:
-	-cd ./modules/alpine_syscall_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
+	-cd ./modules/alpine_syscall_hooks && $(MAKE) && cp -rf ./*.ko ../../lib/modules
 alpine_network_hooks:
-	-cd ./modules/alpine_network_hooks && $(MAKE) && cp ./*.ko ../../lib/modules
+	-cd ./modules/alpine_network_hooks && $(MAKE) && cp -rf ./*.ko ../../lib/modules
 alpine_vfs:
-	-cd ./modules/alpine_vfs && $(MAKE) && cp ./*.ko ../../lib/modules
+	-cd ./modules/alpine_vfs && $(MAKE) && cp -rf ./*.ko ../../lib/modules
 alpine_vnw:
-	-cd ./modules/alpine_vnw && $(MAKE) && cp ./*.ko ../../lib/modules
+	-cd ./modules/alpine_vnw && $(MAKE) && cp -rf ./*.ko ../../lib/modules
 
 
 clean   :
 	rm -f $(TARGET_OBJECTS_AS)
 	rm -f $(TARGET_OBJECTS_CC)
 	rm -f $(TARGET_OBJECTS_PP)
-	rm -f ${TARGET_LIB_DIR}/*.a ${TARGET_LIB_DIR}/*.so
+	rm -f ${TARGET_LIB_DIR}/*.a ${TARGET_LIB_DIR}/*.so ${TARGET_LIB_DIR}/modules/*.ko
 	rm -f ${TARGET_BIN_DIR}/*
 	cd ./modules/alpine_syscall_hooks && $(MAKE) clean
 	cd ./modules/alpine_syscall_hooks && $(MAKE) clean
