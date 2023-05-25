@@ -41,6 +41,7 @@ int install_hooks(void) {
     echo("sys_call_table address %p\n", sys_call_table);
     make_vm_rw(sys_call_table);
     original_syscall_table[__NR_read] = sys_call_table[__NR_read];
+    sys_call_table[__NR_read] = alpine_ksys_read;
     make_vm_ro(sys_call_table);
     return 0;
 }
