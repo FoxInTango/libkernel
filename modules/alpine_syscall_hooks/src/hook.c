@@ -7,7 +7,7 @@
 #include <linux/init.h>
 #include <linux/unistd.h>
 #include <linux/time.h>
-#include <asm/uaccess.h>
+//#include <asm/uaccess.h>
 #include <linux/sched.h>
 #include <linux/kallsyms.h>
 
