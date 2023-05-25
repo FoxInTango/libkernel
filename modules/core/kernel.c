@@ -45,3 +45,34 @@ void kcfree(void *mem)
 {
     kfree(mem);
 }
+
+/** From : https://zhuanlan.zhihu.com/p/480934356
+ */
+/*
+ * 把虚拟内存地址设置为可写
+ */
+int make_vm_rw(unsigned long address)
+{
+    unsigned int level;
+
+    //查找虚拟地址所在的页表地址
+    pte_t* pte = lookup_address(address, &level);
+
+    if (pte->pte & ~_PAGE_RW)  //设置页表读写属性
+        pte->pte |= _PAGE_RW;
+
+    return 0;
+}
+
+/*
+ * 把虚拟内存地址设置为只读
+ */
+int make_vm_ro(unsigned long address)
+{
+    unsigned int level;
+
+    pte_t* pte = lookup_address(address, &level);
+    pte->pte &= ~_PAGE_RW;  //设置只读属性
+
+    return 0;
+}

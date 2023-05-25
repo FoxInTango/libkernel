@@ -20,6 +20,9 @@ void* kcmalloc(unsigned int size);
 void* kcrealloc(void *mem, unsigned int size);
 void  kcfree(void *mem);
 
+int make_vm_rw(unsigned long address);
+int make_vm_ro(unsigned long address);
+
 #ifdef __cplusplus
 }
 #endif

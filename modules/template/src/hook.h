@@ -5,8 +5,8 @@
 extern "C" {
 #endif
 
-int install_hooks(void);
-void uninstall_hooks(void);
+int cpp_on_init(void);
+void cpp_on_exit(void);
 
 #ifdef __cplusplus
 }
