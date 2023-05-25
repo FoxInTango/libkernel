@@ -96,8 +96,6 @@ int hook_syscall(hook_s* hooks,unsigned int count){
     return i++ ;
 }
 
-
-
 int install_hooks(void) {
     long unsigned int* sys_call_table = (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %p\n", sys_call_table);
