@@ -2,6 +2,8 @@
 #include "../../core/kernel.h"
 #include "../../core/echo.h"
 
+#include <asm/uaccess.h>
+
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/kernel.h>
@@ -19,7 +21,7 @@
 #include <linux/pagemap.h>
 #include <linux/splice.h>
 #include <linux/compat.h>
-#include <asm/uaccess.h>
+
 /*
 #include <linux/sched/xacct.h>
 #include <linux/fsnotify.h>
