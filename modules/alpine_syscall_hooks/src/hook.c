@@ -2,6 +2,16 @@
 #include "../../core/kernel.h"
 #include "../../core/echo.h"
 
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/init.h>
+#include <linux/unistd.h>
+#include <linux/time.h>
+#include <asm/uaccess.h>
+#include <linux/sched.h>
+#include <linux/kallsyms.h>
+
+/*
 #include <asm/uaccess.h>
 #include <linux/fs.h>
 
@@ -22,7 +32,7 @@
 #include <linux/pagemap.h>
 #include <linux/splice.h>
 #include <linux/compat.h>
-
+*/
 /*
 #include <linux/sched/xacct.h>
 #include <linux/fsnotify.h>
