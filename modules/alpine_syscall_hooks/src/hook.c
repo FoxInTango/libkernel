@@ -47,7 +47,7 @@ ssize_t (*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
 
 ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count){
     echo("alpine_ksys_read.\n");
-    ksys_read_func real_read = (unsigned long)original_syscall_table[__NR_read];
+    ksys_read_func real_read = (ksys_read_func)original_syscall_table[__NR_read];
     return real_read(fd, buf,count);
 }
 
