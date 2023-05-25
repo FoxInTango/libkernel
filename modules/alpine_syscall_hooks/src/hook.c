@@ -40,7 +40,12 @@
 #include <linux/mount.h>
 
 */
-typedef long unsigned int hook_func_address;
+typedef 
+long unsigned int hook_func_address;
+
+typedef
+ssize_t(*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
+
 typedef struct  _hook_s {
     unsigned int index;
     hook_func_address address;
@@ -60,13 +65,10 @@ static long unsigned int original_syscall_table[512];
 
 static hook_s[] alpine_syscall_hooks = {
     {
-        .index    = __NR_read;
-        .address = alpine_ksys_read
+        .index   = __NR_read;
+        .address = alpine_ksys_read;
     },
 };
-
-typedef 
-ssize_t (*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
 
 long unsigned int* lookup_syscall_table(void){
     return (long unsigned int*)kallsyms_lookup_name("sys_call_table");
