@@ -31,9 +31,9 @@ static unsigned long original_syscall_table[512];
 
 typedef ssize_t (*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
 ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count){
+    echo("alpine_ksys_read.\n");
     ksys_read_func real_read = original_syscall_table[__NR_read];
-    real_read(unsigned int fd, char __user * buf, size_t count);
-    return 0;
+    return real_read(unsigned int fd, char __user * buf, size_t count);
 }
 
 int install_hooks(void) {
@@ -48,6 +48,6 @@ void uninstall_hooks(void){
     unsigned long* sys_call_table = (unsigned long*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %p\n", sys_call_table);
     make_vm_rw(sys_call_table);
-    original_syscall_table[__NR_read] = sys_call_table[__NR_read];
+    sys_call_table[__NR_read] = original_syscall_table[__NR_read];
     make_vm_ro(sys_call_table);
 }

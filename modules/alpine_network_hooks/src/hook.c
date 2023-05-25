@@ -14,7 +14,7 @@
 
 unsigned int alpine_ipv4_in(void* p, struct sk_buff* skb, const struct nf_hook_state* s)
 {
-    echo("alpine ipv4 hooking.\n");
+    //echo("alpine ipv4 hooking.\n");
     return NF_ACCEPT;
 };
 
