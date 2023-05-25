@@ -45,6 +45,15 @@ static long unsigned int original_syscall_table[512];
 typedef 
 ssize_t (*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
 
+long unsigned int* lookup_syscall_table(){
+    return (long unsigned int*)kallsyms_lookup_name("sys_call_table");
+}
+
+void make_syscall_table_rw(){}
+void make_syscall_table_ro(){}
+
+long unsigned int replace_syscall_item(unsigned int index, long unsigned int value){}
+
 ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count){
     echo("alpine_ksys_read.\n");
     ksys_read_func real_read = (ksys_read_func)original_syscall_table[__NR_read];
