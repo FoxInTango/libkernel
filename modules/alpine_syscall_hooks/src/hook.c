@@ -56,6 +56,7 @@ long unsigned int replace_syscall_item(unsigned int index, long unsigned int val
 
 ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count){
     echo("alpine_ksys_read.\n");
+    return 0;
     ksys_read_func real_read = (ksys_read_func)original_syscall_table[__NR_read];
     return real_read(fd, buf,count);
 }
