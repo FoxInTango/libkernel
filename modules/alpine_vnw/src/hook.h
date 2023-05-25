@@ -5,9 +5,6 @@
 extern "C" {
 #endif
 
-void cpp_on_init(void);
-void cpp_on_exit(void);
-
 #ifdef __cplusplus
 }
 #endif
