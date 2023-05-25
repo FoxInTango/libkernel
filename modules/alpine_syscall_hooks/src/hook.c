@@ -40,7 +40,30 @@
 #include <linux/mount.h>
 
 */
+typedef long unsigned int hook_func_address;
+typedef struct  _hook_s {
+    unsigned int index;
+    hook_func_address address;
+}hook_s;
+
+ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count) {
+    ssize_t r;
+    ksys_read_func real_read;
+
+    real_read = (ksys_read_func)original_syscall_table[__NR_read];
+    r = real_read(fd, buf, count);
+    //echo("alpine_ksys_read.\n");// 调用原函数之前输出 可能引起死循环 待确定 -- fs-syscall 中输出会导致死循环
+    return r;
+}
+
 static long unsigned int original_syscall_table[512];
+
+static hook_s[] alpine_syscall_hooks = {
+    {
+        .index    = __NR_read;
+        .address = alpine_ksys_read
+    },
+};
 
 typedef 
 ssize_t (*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
@@ -52,16 +75,28 @@ long unsigned int* lookup_syscall_table(void){
 void make_syscall_table_rw(void){}
 void make_syscall_table_ro(void){}
 
-long unsigned int replace_syscall_item(unsigned int index, long unsigned int value){ return 0; }
 
-ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count){
-    ksys_read_func real_read;
-    
-    real_read = (ksys_read_func)original_syscall_table[__NR_read];
-    ssize_t r = real_read(fd, buf,count);
-    echo("alpine_ksys_read.\n");
-    return r;
+
+inline long unsigned int hook_syscall_item(unsigned int index, long unsigned int address){
+    long unsigned int* sys_call_table = (long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    make_vm_rw((long unsigned int)sys_call_table);
+    original_syscall_table[index] = sys_call_table[index];
+    sys_call_table[index] = (long unsigned int)address;
+    make_vm_ro((long unsigned int)sys_call_table);
 }
+
+int hook_syscall(hook_s* hooks,unsigned int count){
+    long unsigned int* sys_call_table = (long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    make_vm_rw((long unsigned int)sys_call_table);
+    for(unsigned int i = 0;i < count ;i ++){
+        original_syscall_table[hooks[i].index] = sys_call_table[hooks[i].index];
+        sys_call_table[hooks[i].index] = (long unsigned int)hooks[i].address;
+    }
+    make_vm_ro((long unsigned int)sys_call_table);
+    return i++ ;
+}
+
+
 
 int install_hooks(void) {
     long unsigned int* sys_call_table = (long unsigned int*)kallsyms_lookup_name("sys_call_table");
