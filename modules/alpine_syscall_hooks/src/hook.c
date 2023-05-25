@@ -63,7 +63,7 @@ ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count) {
 
 
 
-static hook_s[] alpine_syscall_hooks = {
+static hook_s alpine_syscall_hooks[] = {
     {
         .index   = __NR_read;
         .address = alpine_ksys_read;
