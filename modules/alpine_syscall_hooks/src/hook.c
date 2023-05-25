@@ -40,7 +40,7 @@
 #include <linux/mount.h>
 
 */
-static unsigned long original_syscall_table[512];
+static long unsigned int* original_syscall_table[512];
 
 typedef 
 ssize_t (*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
