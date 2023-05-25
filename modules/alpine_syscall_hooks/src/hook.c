@@ -40,16 +40,16 @@
 #include <linux/mount.h>
 
 */
-typedef 
-long unsigned int hook_func_address;
+typedef long unsigned int hook_func_address;
 
-typedef
-ssize_t(*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
+typedef ssize_t(*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
 
 typedef struct  _hook_s {
     unsigned int index;
     hook_func_address address;
 }hook_s;
+
+static long unsigned int original_syscall_table[512];
 
 ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count) {
     ssize_t r;
@@ -61,7 +61,7 @@ ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count) {
     return r;
 }
 
-static long unsigned int original_syscall_table[512];
+
 
 static hook_s[] alpine_syscall_hooks = {
     {
@@ -85,6 +85,8 @@ inline long unsigned int hook_syscall_item(unsigned int index, long unsigned int
     original_syscall_table[index] = sys_call_table[index];
     sys_call_table[index] = (long unsigned int)address;
     make_vm_ro((long unsigned int)sys_call_table);
+
+    return 0;
 }
 
 int hook_syscall(hook_s* hooks,unsigned int count){
