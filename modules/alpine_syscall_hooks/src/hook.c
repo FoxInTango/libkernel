@@ -3,6 +3,7 @@
 #include "../../core/echo.h"
 
 #include <asm/uaccess.h>
+#include <linux/fs.h>
 
 #include <linux/init.h>
 #include <linux/module.h>
@@ -27,7 +28,7 @@
 #include <linux/fsnotify.h>
 #include <linux/security.h>
 #include <linux/mount.h>
-#include <linux/fs.h>
+
 */
 static unsigned long original_syscall_table[512];
 
