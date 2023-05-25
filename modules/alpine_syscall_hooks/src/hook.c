@@ -52,7 +52,7 @@ ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count){
 }
 
 int install_hooks(void) {
-    unsigned long* sys_call_table = (unsigned long*)kallsyms_lookup_name("sys_call_table");
+    long unsigned int* sys_call_table = (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %p\n", sys_call_table);
     make_vm_rw(sys_call_table);
     original_syscall_table[__NR_read] = sys_call_table[__NR_read];
@@ -61,7 +61,7 @@ int install_hooks(void) {
     return 0;
 }
 void uninstall_hooks(void){
-    unsigned long* sys_call_table = (unsigned long*)kallsyms_lookup_name("sys_call_table");
+    long unsigned int* sys_call_table = (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %p\n", sys_call_table);
     make_vm_rw(sys_call_table);
     sys_call_table[__NR_read] = original_syscall_table[__NR_read];
