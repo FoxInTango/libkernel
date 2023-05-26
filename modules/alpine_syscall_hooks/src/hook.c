@@ -2,6 +2,7 @@
 #include "../../core/kmm.h"
 #include "../../core/echo.h"
 
+#include <asm/unistd.h>
 #include <linux/unistd.h>
 #include <linux/syscalls.h>
 #include <linux/fs.h>
