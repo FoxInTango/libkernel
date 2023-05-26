@@ -55,6 +55,7 @@ typedef struct  _hook_s {
 }hook_s;
 
 static long unsigned int original_syscall_table[512];
+static long unsigned int* sys_call_table = 0;
 
 /** __NR_read
  *
@@ -125,7 +126,7 @@ long unsigned int* lookup_syscall_table(void) {
 };
 
 inline long unsigned int hook_syscall_item(unsigned int index, long unsigned int address){
-    long unsigned int* sys_call_table = lookup_syscall_table();//(long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    sys_call_table = lookup_syscall_table();//(long unsigned int*)kallsyms_lookup_name("sys_call_table");
     make_vm_rw((long unsigned int)sys_call_table);
     original_syscall_table[index] = sys_call_table[index];
     sys_call_table[index] = (long unsigned int)address;
@@ -135,7 +136,7 @@ inline long unsigned int hook_syscall_item(unsigned int index, long unsigned int
 }
 
 int hook_syscall(hook_s* hooks,unsigned int count){
-    long unsigned int* sys_call_table = lookup_syscall_table();//(long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    sys_call_table = lookup_syscall_table();//(long unsigned int*)kallsyms_lookup_name("sys_call_table");
     make_vm_rw((long unsigned int)sys_call_table);
     int i = 0;
     for(i ;i < (int)count ;i ++){
@@ -145,9 +146,6 @@ int hook_syscall(hook_s* hooks,unsigned int count){
     make_vm_ro((long unsigned int)sys_call_table);
     return i++ ;
 }
-
-
-static long unsigned int* sys_call_table = 0;
 
 int install_hooks(void) {
     sys_call_table = lookup_syscall_table();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
