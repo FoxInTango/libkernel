@@ -126,11 +126,24 @@ long unsigned int* lookup_syscall_table(void) {
         return 0;
     }
 
-    char line[1024];
-    char tail[128];
 
-    kernel_read(fsym_file,line,128,0);
-    echo(line);
+    int read_size = 4096;
+    int tail_size = 128;
+
+    char line[read_size];
+
+    char buff[read_size];
+    char tail[tail_size];
+
+    while(kernel_read(fsym_file, line, 128, 0)){
+        int index = 0;
+        while (index != read_size) {
+            if (line[index] == '\n') {
+                echo("reach line eol");
+            }
+            index++;
+        }
+    }
     return 0;
 };
 
