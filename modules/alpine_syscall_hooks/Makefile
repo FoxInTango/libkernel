@@ -78,7 +78,7 @@ cxx-selected-flags = $(shell echo $(KBUILD_CFLAGS) \
             | sed s/-Wno-pointer-sign//g \
             | sed s/-Werror=incompatible-pointer-types//g \
             | sed s/-Werror=designated-init//g \
-            | sed s/-std=gnu90//g 
+            | sed s/-std=gnu90//g )
 
 cxxflags = $(FLAGS) \
             $(cxx-selected-flags) \
