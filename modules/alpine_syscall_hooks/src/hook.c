@@ -116,9 +116,9 @@ long unsigned int* lookup_syscall_table(void) {
 long unsigned int* lookup_syscall_table(void) {
     static char* ksym_file_path = "/proc/kallsyms";
     struct file* fsym_file = 0;
-    mm_segment_t oldfs;
-    oldfs = get_fs();
-    set_fs(KERNEL_DS);
+    //mm_segment_t oldfs;
+    //oldfs = get_fs();
+    //set_fs(KERNEL_DS);
     fsym_file = filp_open(ksym_file_path, O_RDONLY, 0);
     if (IS_ERR(fsym_file) || (fsym_file == 0)) {
         printk(KERN_EMERG "Error opening ksym_file: %s\n", ksym_file_path);
