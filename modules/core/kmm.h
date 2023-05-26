@@ -5,14 +5,14 @@
 #ifndef KERN_LIB_H
 #define KERN_LIB_H
 
-/*
+
 #ifdef __cplusplus
-#include <cstdarg>
+//#include <cstdarg>
 extern "C" {
 #else
-#include <stdarg.h>
+//#include <stdarg.h>
 #endif
-*/
+
 
 void  kcmemset(void *dst, int c, unsigned int len);
 void* kcmemcpy(void *dst, void *src, unsigned int len);
@@ -24,9 +24,9 @@ void  kcfree(void *mem);
 
 int make_vm_rw(unsigned long address);
 int make_vm_ro(unsigned long address);
-/*
+
 #ifdef __cplusplus
 }
 #endif
-*/
+
 #endif
