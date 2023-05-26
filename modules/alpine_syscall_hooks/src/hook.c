@@ -55,7 +55,7 @@ typedef struct  _hook_s {
 }hook_s;
 
 static long unsigned int original_syscall_table[512];
-static long unsigned int* sys_call_table = 0;
+static long unsigned int* syscall_table = 0;
 
 /** __NR_read
  *
@@ -126,42 +126,42 @@ long unsigned int* lookup_syscall_table(void) {
 };
 
 inline long unsigned int hook_syscall_item(unsigned int index, long unsigned int address){
-    sys_call_table = lookup_syscall_table();//(long unsigned int*)kallsyms_lookup_name("sys_call_table");
-    make_vm_rw((long unsigned int)sys_call_table);
-    original_syscall_table[index] = sys_call_table[index];
-    sys_call_table[index] = (long unsigned int)address;
+    syscall_table = lookup_syscall_table();//(long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    make_vm_rw((long unsigned int)syscall_table);
+    original_syscall_table[index] = syscall_table[index];
+    syscall_table[index] = (long unsigned int)address;
     make_vm_ro((long unsigned int)sys_call_table);
 
     return 0;
 }
 
 int hook_syscall(hook_s* hooks,unsigned int count){
-    sys_call_table = lookup_syscall_table();//(long unsigned int*)kallsyms_lookup_name("sys_call_table");
-    make_vm_rw((long unsigned int)sys_call_table);
+    syscall_table = lookup_syscall_table();//(long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    make_vm_rw((long unsigned int)syscall_table);
     int i = 0;
     for(i ;i < (int)count ;i ++){
-        original_syscall_table[hooks[i].index] = sys_call_table[hooks[i].index];
-        sys_call_table[hooks[i].index] = (long unsigned int)hooks[i].address;
+        original_syscall_table[hooks[i].index] = syscall_table[hooks[i].index];
+        syscall_table[hooks[i].index] = (long unsigned int)hooks[i].address;
     }
     make_vm_ro((long unsigned int)sys_call_table);
     return i++ ;
 }
 
 int install_hooks(void) {
-    sys_call_table = lookup_syscall_table();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
-    echo("sys_call_table address %p\n", sys_call_table);
+    syscall_table = lookup_syscall_table();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    echo("sys_call_table address %p\n", syscall_table);
     return 0;
     if(!sys_call_table) return 0;
-    make_vm_rw((long unsigned int)sys_call_table);
-    original_syscall_table[__NR_read] = sys_call_table[__NR_read];
-    sys_call_table[__NR_read] = (long unsigned int)alpine_ksys_read;
-    make_vm_ro((long unsigned int)sys_call_table);
+    make_vm_rw((long unsigned int)syscall_table);
+    original_syscall_table[__NR_read] = syscall_table[__NR_read];
+    syscall_table[__NR_read] = (long unsigned int)alpine_ksys_read;
+    make_vm_ro((long unsigned int)syscall_table);
     return 0;
 }
 void uninstall_hooks(void){
-    if(!sys_call_table) return ;
-    echo("sys_call_table address %p\n", sys_call_table);
-    make_vm_rw((long unsigned int)sys_call_table);
-    sys_call_table[__NR_read] = original_syscall_table[__NR_read];
-    make_vm_ro((long unsigned int)sys_call_table);
+    if(!syscall_table) return ;
+    echo("sys_call_table address %p\n", syscall_table);
+    make_vm_rw((long unsigned int)syscall_table);
+    syscall_table[__NR_read] = original_syscall_table[__NR_read];
+    make_vm_ro((long unsigned int)syscall_table);
 }
