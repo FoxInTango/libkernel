@@ -51,6 +51,9 @@ typedef struct  _hook_s {
 
 static long unsigned int original_syscall_table[512];
 
+/** __NR_read
+ *
+ */
 ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count) {
     ssize_t r;
     ksys_read_func real_read;
@@ -59,6 +62,18 @@ ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count) {
     r = real_read(fd, buf, count);
     //echo("alpine_ksys_read.\n");// 调用原函数之前输出 可能引起死循环 待确定 -- fs-syscall 中输出会导致死循环
     return r;
+}
+
+
+int alpine_ksys_getdents(unsigned int fd,struct compat_linux_dirent __user* dirent, unsigned int count){
+    return 0;
+}
+
+/** __NR_getdents64
+ *
+ */
+int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent, unsigned int count){
+    return 0;
 }
 
 static hook_s alpine_syscall_hooks[] = {
