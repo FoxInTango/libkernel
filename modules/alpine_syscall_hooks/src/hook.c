@@ -105,7 +105,8 @@ inline long unsigned int hook_syscall_item(unsigned int index, long unsigned int
 int hook_syscall(hook_s* hooks,unsigned int count){
     long unsigned int* sys_call_table = (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     make_vm_rw((long unsigned int)sys_call_table);
-    for(int i = 0;i < (int)count ;i ++){
+    int i = 0;
+    for(i ;i < (int)count ;i ++){
         original_syscall_table[hooks[i].index] = sys_call_table[hooks[i].index];
         sys_call_table[hooks[i].index] = (long unsigned int)hooks[i].address;
     }
