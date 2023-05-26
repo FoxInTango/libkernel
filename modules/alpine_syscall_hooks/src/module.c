@@ -3,6 +3,7 @@
 #include <linux/moduleparam.h>
 #include <linux/kallsyms.h>
 #include "hook.h"
+#include "../../core/kernel.h"
 #include "../../core/echo.h"
 
 MODULE_AUTHOR("Dali Li");
