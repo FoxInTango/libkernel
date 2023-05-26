@@ -3,6 +3,7 @@
 #include "../../core/echo.h"
 
 #include <asm/unistd.h>
+#include <asm/syscall.h>
 //#include <linux/unistd.h>
 //#include <linux/syscalls.h>
 //#include <linux/fs.h>
@@ -92,7 +93,7 @@ long unsigned int* lookup_syscall_table(void) {
     long unsigned int* table = PAGE_OFFSET;
     long unsigned int* end = VMALLOC_START < ULLONG_MAX ? VMALLOC_START : ULLONG_MAX;
     while (table != end && table + __NR_close * sizeof(long unsigned int*) < end) {
-        if (table[__NR_close] == (long unsigned int)SYS_close) {
+        if (table[__NR_close] == (long unsigned int)sys_close) {
             echo("sys_call_table address %p\n", table);
             return table;
         }
