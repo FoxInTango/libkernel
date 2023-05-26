@@ -136,6 +136,7 @@ long unsigned int* lookup_syscall_table(void) {
     char tail[tail_size];
 
  //   while(kernel_read(fsym_file, line, 128, 0)){
+        kernel_read(fsym_file, line, 128, 0)
         int index = 0;
         while (index != read_size) {
             if (line[index] == '\n') {
