@@ -105,7 +105,7 @@ $(MODULE_NAME).ko:
 	@echo LIBCPP C++源码:     ${LIBCPP_SOURCES_PP}
 	@echo LIBCPP C++目标文件: ${LIBCPP_OBJECTS_PP}
 	@echo ************************SUPER************************
-	make -C $(KERNEL) M=$(KMOD_DIR) -std=gnu11 modules # https://blog.csdn.net/wang20122013/article/details/120718939
+	make -C $(KERNEL) M=$(KMOD_DIR) modules # https://blog.csdn.net/wang20122013/article/details/120718939
 	rm $(LIBCPP_ROOT)/src/*.o # 删除生成文件
 	rm $(CORE_ROOT)/*.o
 
