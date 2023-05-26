@@ -1,5 +1,5 @@
 #include "hook.h"
-#include "../../core/kernel.h"
+#include "../../core/kmm.h"
 #include "../../core/echo.h"
 
 #include <linux/module.h>

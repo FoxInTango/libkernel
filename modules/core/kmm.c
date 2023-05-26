@@ -7,7 +7,7 @@
 #include <linux/slab.h>
 #include <linux/string.h>
 
-#include "kernel.h"
+#include "kmm.h"
 
 void kcmemset(void *dst, int c, unsigned int len)
 {
