@@ -64,7 +64,7 @@ MODULE_NAME := alpine_syscall_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
 FLAGS       := -Wall -I /home/sparrow/alpine/inc
 KMOD_DIR    := $(shell pwd) 
-MODULE_OBJECTS := ./src/module.o ./src/hook.o $(LIBCPP_OBJECTS) $(CORE_OBJECTS)
+MODULE_OBJECTS := $(LIBCPP_OBJECTS) $(CORE_OBJECTS) ./src/module.o ./src/hook.o 
 
 ccflags-y += $(FLAGS)
 
