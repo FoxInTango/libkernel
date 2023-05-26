@@ -7,7 +7,8 @@
 #include <linux/mm.h>
 //#include <linux/unistd.h>
 //#include <linux/syscalls.h>
-//#include <linux/fs.h>
+#include <linux/uaccess.h>
+#include <linux/fs.h>
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/kernel.h>
