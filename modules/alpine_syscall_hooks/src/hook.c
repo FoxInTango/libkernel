@@ -4,6 +4,7 @@
 
 #include <asm/unistd.h>
 #include <asm/syscall.h>
+#include <linux/mm.h>
 //#include <linux/unistd.h>
 //#include <linux/syscalls.h>
 //#include <linux/fs.h>
@@ -89,6 +90,7 @@ static hook_s alpine_syscall_hooks[] = {
 void make_syscall_table_rw(void){}
 void make_syscall_table_ro(void){}
 
+/*
 long unsigned int* lookup_syscall_table(void) {
     long unsigned int* table = PAGE_OFFSET;
     long unsigned int* end = VMALLOC_START < ULLONG_MAX ? VMALLOC_START : ULLONG_MAX;
@@ -100,6 +102,24 @@ long unsigned int* lookup_syscall_table(void) {
         table += sizeof(long unsigned int*);
     }
     echo("sys_call_table address missed.\n");
+    return 0;
+};
+*/
+
+/** Find it in /proc/kallsyms
+ * 
+ */
+long unsigned int* lookup_syscall_table(void) {
+    static char* ksym_file_path = "/proc/kallsyms";
+    struct file* fsym_file = 0;
+    mm_segment_t oldfs;
+    oldfs = get_fs();
+    set_fs(KERNEL_DS);
+    fsym_file = filp_open(ksym_file_path, O_RDONLY, 0);
+    if (IS_ERR(f) || (f == NULL)) {
+        printk(KERN_EMERG "Error opening System.map-<version> file: %s\n", filename);
+        return -1;
+    }
     return 0;
 };
 
