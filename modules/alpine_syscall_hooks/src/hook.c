@@ -124,6 +124,11 @@ long unsigned int* lookup_syscall_table(void) {
         printk(KERN_EMERG "Error opening ksym_file: %s\n", ksym_file_path);
         return 0;
     }
+
+    char line[128];
+
+    kernel_read(fsym_file,line,128,0);
+    echo(line);
     return 0;
 };
 
