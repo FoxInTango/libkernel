@@ -2,12 +2,11 @@
 #include "../../core/kmm.h"
 #include "../../core/echo.h"
 
+#include <asm/processor.h>
 #include <asm/unistd.h>
 #include <asm/syscall.h>
 #include <linux/mm.h>
-//#include <linux/unistd.h>
-//#include <linux/syscalls.h>
-#include <linux/processor.h>
+
 #include <linux/uaccess.h>
 #include <linux/fs.h>
 #include <linux/init.h>
@@ -17,6 +16,8 @@
 #include <linux/sched.h>
 #include <linux/kallsyms.h>
 
+//#include <linux/unistd.h>
+//#include <linux/syscalls.h>
 /*
 #include <asm/uaccess.h>
 #include <linux/fs.h>
