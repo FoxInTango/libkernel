@@ -3,7 +3,7 @@
  */
 
 #include <cstddef>
-#include "kernel.h"
+#include "kmm.h"
 #include "echo.h"
 
 void *operator new(size_t sz) throw ()
