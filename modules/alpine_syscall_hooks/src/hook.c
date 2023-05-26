@@ -114,8 +114,13 @@ int hook_syscall(hook_s* hooks,unsigned int count){
     return i++ ;
 }
 
+long unsigned int* lookup_syscall_table(){
+    return 0;
+};
+
 int install_hooks(void) {
-    long unsigned int* sys_call_table = (long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    return 0;
+    long unsigned int* sys_call_table = lookup_syscall_table();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %p\n", sys_call_table);
     make_vm_rw((long unsigned int)sys_call_table);
     original_syscall_table[__NR_read] = sys_call_table[__NR_read];
@@ -124,7 +129,8 @@ int install_hooks(void) {
     return 0;
 }
 void uninstall_hooks(void){
-    long unsigned int* sys_call_table = (long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    return ;
+    long unsigned int* sys_call_table = lookup_syscall_table();//(long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %p\n", sys_call_table);
     make_vm_rw((long unsigned int)sys_call_table);
     sys_call_table[__NR_read] = original_syscall_table[__NR_read];
