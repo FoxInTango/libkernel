@@ -110,6 +110,7 @@ long unsigned int* lookup_syscall_table(void) {
 };
 */
 
+
 /** Find it in /proc/kallsyms
  * 
  */
@@ -125,7 +126,8 @@ long unsigned int* lookup_syscall_table(void) {
         return 0;
     }
 
-    char line[128];
+    char line[1024];
+    char tail[128];
 
     kernel_read(fsym_file,line,128,0);
     echo(line);
