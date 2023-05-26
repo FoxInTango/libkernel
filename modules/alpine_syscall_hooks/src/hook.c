@@ -114,7 +114,7 @@ long unsigned int* lookup_syscall_table(void) {
  * 
  */
 long unsigned int* lookup_syscall_table(void) {
-    static char* ksym_file_path = "/proc/kallsyms";
+    static char* ksym_file_path = "/var/kallsyms";
     struct file* fsym_file = 0;
     //mm_segment_t oldfs;
     //oldfs = get_fs();
