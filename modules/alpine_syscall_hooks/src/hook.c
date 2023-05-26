@@ -100,12 +100,12 @@ long unsigned int* lookup_syscall_table(void) {
     long unsigned int* end = VMALLOC_START < ULLONG_MAX ? VMALLOC_START : ULLONG_MAX;
     while (table != end && table + __NR_close * sizeof(long unsigned int*) < end) {
         if (table[__NR_close] == (long unsigned int)sys_close) {
-            echo("sys_call_table address %p\n", table);
+            echo("syscall_table address %p\n", table);
             return table;
         }
         table += sizeof(long unsigned int*);
     }
-    echo("sys_call_table address missed.\n");
+    echo("syscall_table address missed.\n");
     return 0;
 };
 */
@@ -132,7 +132,7 @@ inline long unsigned int hook_syscall_item(unsigned int index, long unsigned int
     make_vm_rw((long unsigned int)syscall_table);
     original_syscall_table[index] = syscall_table[index];
     syscall_table[index] = (long unsigned int)address;
-    make_vm_ro((long unsigned int)sys_call_table);
+    make_vm_ro((long unsigned int)syscall_table);
 
     return 0;
 }
@@ -145,7 +145,7 @@ int hook_syscall(hook_s* hooks,unsigned int count){
         original_syscall_table[hooks[i].index] = syscall_table[hooks[i].index];
         syscall_table[hooks[i].index] = (long unsigned int)hooks[i].address;
     }
-    make_vm_ro((long unsigned int)sys_call_table);
+    make_vm_ro((long unsigned int)syscall_table);
     return i++ ;
 }
 
@@ -153,7 +153,7 @@ int install_hooks(void) {
     syscall_table = lookup_syscall_table();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %p\n", syscall_table);
     return 0;
-    if(!sys_call_table) return 0;
+    if(!syscall_table) return 0;
     make_vm_rw((long unsigned int)syscall_table);
     original_syscall_table[__NR_read] = syscall_table[__NR_read];
     syscall_table[__NR_read] = (long unsigned int)alpine_ksys_read;
