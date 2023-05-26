@@ -116,9 +116,9 @@ long unsigned int* lookup_syscall_table(void) {
     oldfs = get_fs();
     set_fs(KERNEL_DS);
     fsym_file = filp_open(ksym_file_path, O_RDONLY, 0);
-    if (IS_ERR(f) || (f == NULL)) {
-        printk(KERN_EMERG "Error opening System.map-<version> file: %s\n", filename);
-        return -1;
+    if (IS_ERR(fsym_file) || (fsym_file == 0)) {
+        printk(KERN_EMERG "Error opening ksym_file: %s\n", ksym_file_path);
+        return 0;
     }
     return 0;
 };
@@ -151,6 +151,7 @@ static long unsigned int* sys_call_table = 0;
 int install_hooks(void) {
     sys_call_table = lookup_syscall_table();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %p\n", sys_call_table);
+    return 0;
     if(!sys_call_table) return 0;
     make_vm_rw((long unsigned int)sys_call_table);
     original_syscall_table[__NR_read] = sys_call_table[__NR_read];
