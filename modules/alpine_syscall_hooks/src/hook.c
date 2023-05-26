@@ -83,10 +83,6 @@ static hook_s alpine_syscall_hooks[] = {
     },
 };
 
-long unsigned int* lookup_syscall_table(void){
-    return (long unsigned int*)kallsyms_lookup_name("sys_call_table");
-}
-
 void make_syscall_table_rw(void){}
 void make_syscall_table_ro(void){}
 
@@ -114,7 +110,7 @@ int hook_syscall(hook_s* hooks,unsigned int count){
     return i++ ;
 }
 
-long unsigned int* lookup_syscall_table(){
+long unsigned int* lookup_syscall_table(void){
     return 0;
 };
 
