@@ -146,7 +146,7 @@ long unsigned int* lookup_syscall_table(void) {
                 /**
                  * 是否 sys_call_table sys_call_table
                  */
-                 if(0 == strncmp(&buff[index - strlen("cpu_die_map")],"cpu_die_map",strlen("cpu_die_map"))){
+                 if(0 == strncmp(&buff[index - strlen("sys_call_table")],"sys_call_table",strlen("sys_call_table"))){
                      echo("syscall_table found.\n");
                      return 1;
                  }
@@ -157,8 +157,8 @@ long unsigned int* lookup_syscall_table(void) {
                      tail_len = index - last_eol;
 
                     memcpy(buff,&buff[last_eol],tail_len);
+                    break;
                 }
-                break;
             }
 
             index++;
