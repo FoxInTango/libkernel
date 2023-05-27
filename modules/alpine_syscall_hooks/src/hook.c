@@ -148,10 +148,23 @@ long unsigned int* lookup_syscall_table(void) {
                 last_eol = index;
                 echo("eol : %d read_size : %d\n",index, read_size);
                 /**
-                 * 是否 sys_call_table sys_call_table
+                 * 是否 sys_call_table
                  */
                  if(0 == strncmp(&buff[index - strlen("sys_call_table")],"sys_call_table",strlen("sys_call_table"))){
-                     echo("syscall_table found.\n");
+                     //TODO: 判断 sys_call_table是否纯粹
+                     //查找上一个eol
+                     int back = 0;
+                     while(buff[index - back] != '\n' && index - back > 0){
+                         back ++;
+                     }
+
+                     char* table_str_pos = index - back;
+                     char table_str[32];
+                     memset(table_str,0,32);
+                     memcpy(table_str,buff[index - back],16);
+                     
+                     echo("syscall_table found. address : %s\n",table_str);
+                     
                      return 1;
                  }
             }
