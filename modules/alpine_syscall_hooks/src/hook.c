@@ -120,9 +120,6 @@ long unsigned int* lookup_syscall_table(void) {
 long unsigned int* lookup_syscall_table(void) {
     static char* ksym_file_path = "/var/kallsyms";
     struct file* fsym_file = 0;
-    //mm_segment_t oldfs;
-    //oldfs = get_fs();
-    //set_fs(KERNEL_DS);
     fsym_file = filp_open(ksym_file_path, O_RDONLY, 0);
     if (IS_ERR(fsym_file) || (fsym_file == 0)) {
         printk(KERN_EMERG "Error opening ksym_file: %s\n", ksym_file_path);
@@ -181,7 +178,6 @@ long unsigned int* lookup_syscall_table(void) {
             if(index == buff_size){
                 if(buff[index] != '\n') {
                     tail_len = index - last_eol;
-                    echo("tail length : %d\n", tail_len);
                     memset(buff, 0, buff_size);
                     memcpy(buff,&buff[last_eol + 1],tail_len);
                     echo("tail : %s tail_len :%d",buff,tail_len);
