@@ -152,7 +152,7 @@ long unsigned int* lookup_syscall_table(void) {
 
         read_offset += buff_size;
     }
-    filp_close(fsym_file);
+    filp_close(fsym_file,0);
     return 0;
 };
 
