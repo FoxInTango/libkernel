@@ -2,7 +2,7 @@
 #include "../../core/kmm.h"
 #include "../../core/echo.h"
 
-#include <string.h>
+#include <linux/string.h>
 
 #include <asm/processor.h>
 #include <asm/unistd.h>
