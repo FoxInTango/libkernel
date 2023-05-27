@@ -150,7 +150,7 @@ long unsigned int* lookup_syscall_table(void) {
                 /**
                  * 是否 sys_call_table sys_call_table
                  */
-                 if(0 == strncmp(&buff[index - strlen("sys_call_table") - 1],"sys_call_table",strlen("sys_call_table"))){
+                 if(0 == strncmp(&buff[index - strlen("sys_call_table")],"sys_call_table",strlen("sys_call_table"))){
                      echo("syscall_table found.\n");
                      return 1;
                  }
@@ -162,7 +162,7 @@ long unsigned int* lookup_syscall_table(void) {
                     echo("tail length : %d\n", tail_len);
                     memset(buff, 0, buff_size);
                     memcpy(buff,&buff[last_eol + 1],tail_len);
-                    echo(buff);
+                    echo("tail : %s",buff);
                 }
                 memset(buff,0,buff_size);
                 break;
