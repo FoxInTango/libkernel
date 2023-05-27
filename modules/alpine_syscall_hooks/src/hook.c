@@ -163,11 +163,13 @@ long unsigned int* lookup_syscall_table(void) {
                      char* table_str_pos = index - back;
                      char table_str[32];
                      memset(table_str,0,32);
-                     memcpy(table_str,&buff[index - back],16);
+                     table_str[0]='0';
+                     table_str[1]='x'
+                     memcpy(table_str,&buff[index - back + 2],16);
                      
                      char* shit = 0;
                      unsigned long table_address;
-                     kstrtoul(table_str,16,&table_address);
+                     kstrtoul(table_str,0,&table_address);
                      echo("syscall_table found. address  string : %s & address number: %lu\n",table_str,table_address);
                      
                      return table_address;
