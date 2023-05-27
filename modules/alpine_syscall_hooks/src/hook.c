@@ -165,9 +165,10 @@ long unsigned int* lookup_syscall_table(void) {
                      memset(table_str,0,32);
                      memcpy(table_str,&buff[index - back],16);
                      
-                     echo("syscall_table found. address : %s\n",table_str);
+                     unsigned long table_address = strtoul(table_str, &table_str[17], 10);
+                     echo("syscall_table found. address  string : %s & address number: %lu\n",table_str,table_address);
                      
-                     return 1;
+                     return table_address;
                  }
             }
 
