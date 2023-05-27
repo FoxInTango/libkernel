@@ -133,12 +133,15 @@ long unsigned int* lookup_syscall_table(void) {
 
     int read_offset = 0;
     int read_size = 0;
-    //while(read_size = kernel_read(fsym_file, buff, buff_size, read_offset) > 0){
+    int tail_len = 0;
+    while(read_size = kernel_read(fsym_file, &buff[tail_len], buff_size - tail_len, read_offset) > 0){
 
-        read_size = kernel_read(fsym_file, buff, buff_size, read_offset);
+        //read_size = kernel_read(fsym_file, buff, buff_size, read_offset);
         int index = 0;
-        while (index != read_size) {
+        int last_eol = 0;
+        while (true) {
             if (buff[index] == '\n') {
+                last_eol = index;
                 echo("eol : %d read_size : %d\n",index, read_size);
                 /**
                  * 是否 sys_call_table sys_call_table
@@ -149,11 +152,20 @@ long unsigned int* lookup_syscall_table(void) {
                  }
             }
 
+            if(index == read_size){
+                if(buff[index] != '\n') {
+                     tail_len = index - last_eol;
+
+                    memcpy(buff,&buff[last_eol],tail_len);
+                }
+                break;
+            }
+
             index++;
         }
         echo("sys_call_table unfound.\n");
-        read_offset += buff_size;
-    //}
+        read_offset += buff_size - tail_len;
+    }
     filp_close(fsym_file,0);
     return 0;
 };
@@ -192,6 +204,7 @@ int install_hooks(void) {
     return 0;
 }
 void uninstall_hooks(void){
+    return ;
     if(!syscall_table) return ;
     echo("sys_call_table address %p\n", syscall_table);
     make_vm_rw((long unsigned int)syscall_table);
