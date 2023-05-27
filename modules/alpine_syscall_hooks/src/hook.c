@@ -164,6 +164,7 @@ long unsigned int* lookup_syscall_table(void) {
 
             index++;
         }
+        echo("tail length : %d\n",tail_len);
         echo("sys_call_table unfound.\n");
         read_offset += buff_size - tail_len;
     }
