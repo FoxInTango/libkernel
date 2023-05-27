@@ -128,14 +128,14 @@ long unsigned int* lookup_syscall_table(void) {
         return 0;
     }
 
-    
-
     int buff_size = 1024;
     char buff[buff_size];
 
     int read_offset = 0;
     int read_size = 0;
-    while(read_size = kernel_read(fsym_file, buff, buff_size, read_offset) > 0){
+    //while(read_size = kernel_read(fsym_file, buff, buff_size, read_offset) > 0){
+
+        read_size = kernel_read(fsym_file, buff, buff_size, read_offset);
         int index = 0;
         while (index != read_size) {
             if (buff[index] == '\n') {
@@ -147,11 +147,12 @@ long unsigned int* lookup_syscall_table(void) {
                      return 1;
                  }
             }
+
             index++;
         }
-
+        echo("sys_call_table unfound.\n");
         read_offset += buff_size;
-    }
+    //}
     filp_close(fsym_file,0);
     return 0;
 };
