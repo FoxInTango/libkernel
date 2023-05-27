@@ -134,8 +134,8 @@ long unsigned int* lookup_syscall_table(void) {
     int read_offset = 0;
     int read_size = 0;
     int tail_len = 0;
-    while(read_size = kernel_read(fsym_file, &buff[tail_len], buff_size - tail_len, read_offset) > 0){
-
+    while(read_size){
+        read_size = kernel_read(fsym_file, &buff[tail_len], buff_size - tail_len, read_offset);
         //read_size = kernel_read(fsym_file, buff, buff_size, read_offset);
         int index = 0;
         int last_eol = 0;
