@@ -169,7 +169,7 @@ long unsigned int* lookup_syscall_table(void) {
                      
                      char* shit = 0;
                      unsigned long table_address;
-                     kstrtoul(table_str,0,&table_address);
+                     kstrtoul(table_str,16,&table_address);
                      echo("syscall_table found. address  string : %s & address number: %lu\n",table_str,table_address);
                      
                      return table_address;
