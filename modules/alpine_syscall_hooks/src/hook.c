@@ -168,10 +168,10 @@ long unsigned int* lookup_syscall_table(void) {
                      memcpy(&table_str[2],&buff[index - back],16);
                      
                      char* shit = 0;
-                     unsigned long table_address;
+                     long unsigned int table_address;
                      kstrtoul(table_str,16,&table_address);
                      echo("syscall_table found. address  string : %s & address number: %lu\n",table_str,table_address);
-                     
+                     filp_close(fsym_file, 0);
                      return table_address;
                  }
             }
@@ -222,7 +222,7 @@ int hook_syscall(hook_s* hooks,unsigned int count){
 
 int install_hooks(void) {
     syscall_table = lookup_syscall_table();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
-    echo("sys_call_table address %p\n", syscall_table);
+    echo("sys_call_table address %lu\n", syscall_table);
     return 0;
     if(!syscall_table) return 0;
     make_vm_rw((long unsigned int)syscall_table);
