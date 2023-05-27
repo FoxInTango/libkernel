@@ -150,7 +150,7 @@ long unsigned int* lookup_syscall_table(void) {
             index++;
         }
 
-        read_offset += read_size;
+        read_offset += buff_size;
     }
     return 0;
 };
