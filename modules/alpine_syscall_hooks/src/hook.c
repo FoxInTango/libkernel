@@ -65,7 +65,7 @@ typedef struct _linux_dirent64 { // https://man7.org/linux/man-pages/man2/getden
 
 typedef ssize_t (*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
 typedef long    (*ksys_getdents_func)(unsigned int fd, struct linux_dirent* dirp,unsigned int count);
-typedef ssize_t (*ksys_getdents64_func)(int fd, linux_dirent64* dirp, size_t count); // void* dirp
+typedef ssize_t (*ksys_getdents64_func)(int fd, void* dirp, size_t count); // void* dirp
 
 typedef struct  _hook_s {
     unsigned int index;
