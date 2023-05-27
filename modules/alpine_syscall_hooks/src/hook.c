@@ -128,10 +128,10 @@ long unsigned int* lookup_syscall_table(void) {
         return 0;
     }
 
-    char buff[buff_size];
+    
 
     int buff_size = 4096;
-    int tail_size = 128;
+    char buff[buff_size];
 
     unsigned int read_offset = 0;
     unsigned int read_size = 0;
