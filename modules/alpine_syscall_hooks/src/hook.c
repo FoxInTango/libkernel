@@ -53,6 +53,7 @@
 typedef long unsigned int hook_func_address;
 
 typedef ssize_t (*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
+typedef ssize_t (*ksys_getdents_func)(int fd, void* dirp, size_t count);
 
 typedef struct  _hook_s {
     unsigned int index;
