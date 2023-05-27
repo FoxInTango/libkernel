@@ -158,6 +158,8 @@ long unsigned int* lookup_syscall_table(void) {
                          back ++;
                      }
 
+                     back -= 1;
+
                      char* table_str_pos = index - back;
                      char table_str[32];
                      memset(table_str,0,32);
