@@ -150,8 +150,10 @@ long unsigned int* lookup_syscall_table(void) {
                 /**
                  * 是否 sys_call_table
                  */
-                 if(0 == strncmp(&buff[index - strlen("sys_call_table")],"sys_call_table",strlen("sys_call_table"))){
-                     //TODO: 判断 sys_call_table是否纯粹
+                 //判断 sys_call_table是否纯粹 -- 前方空格
+                 if(0 == strncmp(&buff[index - strlen("sys_call_table")],"sys_call_table",strlen("sys_call_table")) && (buff[index - strlen("sys_call_table") - 1] == ' '){
+                     
+                     //if(buff[index - strlen("sys_call_table") - 1] != ' ') continue;
                      //查找上一个eol
                      int back = 1;
                      while(buff[index - back] != '\n' && index - back != -1){
