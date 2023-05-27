@@ -9,6 +9,7 @@
 #include <asm/syscall.h>
 #include <linux/mm.h>
 
+#include <linux/slab.h>
 #include <linux/uaccess.h>
 #include <linux/fs.h>
 #include <linux/init.h>
