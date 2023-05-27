@@ -154,7 +154,7 @@ long unsigned int* lookup_syscall_table(void) {
                      //TODO: 判断 sys_call_table是否纯粹
                      //查找上一个eol
                      int back = 1;
-                     while(buff[index - back] != '\n' && index - back > 0){
+                     while(buff[index - back] != '\n' && index - back != -1){
                          back ++;
                      }
 
