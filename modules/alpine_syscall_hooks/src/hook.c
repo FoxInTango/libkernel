@@ -140,9 +140,9 @@ long unsigned int* lookup_syscall_table(void) {
         while (index != read_size) {
             if (buff[index] == '\n') {
                 /**
-                 * 是否 sys_call_table
+                 * 是否 sys_call_table sys_call_table
                  */
-                 if(0 == strncmp(&buff[index - strlen("sys_call_table")],"sys_call_table",strlen("sys_call_table"))){
+                 if(0 == strncmp(&buff[index - strlen("nr_dentry")],"nr_dentry",strlen("nr_dentry"))){
                      echo("syscall_table found.\n");
                      return 1;
                  }
