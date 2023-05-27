@@ -143,7 +143,7 @@ long unsigned int* lookup_syscall_table(void) {
                 /**
                  * 是否 sys_call_table sys_call_table
                  */
-                 if(0 == strncmp(&buff[index - strlen("nr_dentry")],"nr_dentry",strlen("nr_dentry"))){
+                 if(0 == strncmp(&buff[index - strlen("cpu_die_map")],"cpu_die_map",strlen("cpu_die_map"))){
                      echo("syscall_table found.\n");
                      return 1;
                  }
