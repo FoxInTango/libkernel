@@ -130,6 +130,7 @@ long unsigned int* lookup_syscall_table(void) {
 
     int buff_size = 1024;
     static char buff[buff_size];
+    memset(buff,0,buff_size);
 
     int read_offset = 0;
     int read_size = 0;
@@ -157,14 +158,17 @@ long unsigned int* lookup_syscall_table(void) {
             if(index == buff_size){
                 if(buff[index] != '\n') {
                     tail_len = index - last_eol;
+                    echo("tail length : %d\n", tail_len);
+                    memset(buff, 0, buff_size);
                     memcpy(buff,&buff[last_eol + 1],tail_len);
                 }
+                memset(buff,0,buff_size);
                 break;
             }
 
             index++;
         }
-        echo("tail length : %d\n",tail_len);
+        
         echo("sys_call_table unfound.\n");
         read_offset += buff_size - tail_len;
     }
