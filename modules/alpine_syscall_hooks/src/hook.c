@@ -133,11 +133,11 @@ long unsigned int* lookup_syscall_table(void) {
     char buff[buff_size];
     memset(buff,0,buff_size);
 
-    int read_offset = 0;
+    loff_t read_offset = 0;
     int read_size = 0;
     int tail_len = 0;
-    while(true){ //kernel_read
-        read_size = vfs_read(fsym_file, &buff[tail_len], buff_size - tail_len, read_offset);
+    while(true){ 
+        read_size = kernel_read(fsym_file, &buff[tail_len], buff_size - tail_len, &read_offset);
         echo("file readed length : %d",read_size);
         if(read_size < 1) break;
         //read_size = kernel_read(fsym_file, buff, buff_size, read_offset);
