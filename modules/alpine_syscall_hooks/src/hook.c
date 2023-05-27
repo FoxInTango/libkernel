@@ -164,7 +164,7 @@ long unsigned int* lookup_syscall_table(void) {
                      char table_str[32];
                      memset(table_str,0,32);
                      table_str[0]='0';
-                     table_str[1]='x'
+                     table_str[1]='x';
                      memcpy(table_str,&buff[index - back + 2],16);
                      
                      char* shit = 0;
