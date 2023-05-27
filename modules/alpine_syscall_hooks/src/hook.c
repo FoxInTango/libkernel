@@ -128,14 +128,14 @@ long unsigned int* lookup_syscall_table(void) {
         return 0;
     }
 
-    int read_size = 4096;
+    int buff_size = 4096;
     int tail_size = 128;
 
-    char buff[read_size];
+    char buff[buff_size];
 
     unsigned int read_offset = 0;
-
-    while(kernel_read(fsym_file, buff, read_size, read_offset)){
+    unsigned int read_size = 0;
+    while(read_size = kernel_read(fsym_file, buff, buff_size, read_offset)){
         int index = 0;
         while (index != read_size) {
             if (buff[index] == '\n') {
