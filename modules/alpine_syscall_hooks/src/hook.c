@@ -184,7 +184,7 @@ long unsigned int* lookup_syscall_table(void) {
                     echo("tail length : %d\n", tail_len);
                     memset(buff, 0, buff_size);
                     memcpy(buff,&buff[last_eol + 1],tail_len);
-                    echo("tail : %s",buff);
+                    echo("tail : %s tail_len :",buff,tail_len);
                 }
                 memset(buff,0,buff_size);
                 break;
