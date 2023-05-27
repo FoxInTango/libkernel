@@ -232,7 +232,7 @@ int install_hooks(void) {
 }
 void uninstall_hooks(void){
     if(!syscall_table) return ;
-    echo("sys_call_table address %p\n", syscall_table);
+    echo("sys_call_table address %lu\n", syscall_table);
     make_vm_rw(syscall_table);
     syscall_table[__NR_read] = original_syscall_table[__NR_read];
     make_vm_ro((long unsigned int)syscall_table);
