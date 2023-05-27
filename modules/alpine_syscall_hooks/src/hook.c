@@ -139,7 +139,7 @@ long unsigned int* lookup_syscall_table(void) {
         int index = 0;
         while (index != read_size) {
             if (buff[index] == '\n') {
-                echo("eol : %d\n",index);
+                echo("eol : %d read_size : %d\n",index, read_size);
                 /**
                  * 是否 sys_call_table sys_call_table
                  */
