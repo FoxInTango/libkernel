@@ -142,7 +142,7 @@ long unsigned int* lookup_syscall_table(void) {
                 /**
                  * 是否 sys_call_table
                  */
-                 if(0 == strcmp(&buff[index],"sys_call_table",strlen("sys_call_table")){
+                 if(0 == strcmp(&buff[index],"sys_call_table",strlen("sys_call_table"))){
                      echo("syscall_table found.\n");
                      return 1;
                  }
