@@ -18,6 +18,7 @@
 #include <linux/time.h>
 #include <linux/sched.h>
 #include <linux/kallsyms.h>
+#include <linux/dirent.h>
 
 //#include <linux/unistd.h>
 //#include <linux/syscalls.h>
@@ -51,6 +52,14 @@
 
 */
 typedef long unsigned int hook_func_address;
+
+typedef struct _linux_dirent64 { // https://man7.org/linux/man-pages/man2/getdents.2.html
+    ino64_t        d_ino;    /* 64-bit inode number */
+    off64_t        d_off;    /* 64-bit offset to next structure */
+    unsigned short d_reclen; /* Size of this dirent */
+    unsigned char  d_type;   /* File type */
+    char           d_name[]; /* Filename (null-terminated) */
+}linux_dirent64_;
 
 typedef ssize_t (*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
 typedef long    (*ksys_getdents_func)(unsigned int fd, struct linux_dirent* dirp,unsigned int count);
