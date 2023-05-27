@@ -223,7 +223,6 @@ int hook_syscall(hook_s* hooks,unsigned int count){
 int install_hooks(void) {
     syscall_table = lookup_syscall_table();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %lu\n", syscall_table);
-    return 0;
     if(!syscall_table) return 0;
     make_vm_rw((long unsigned int)syscall_table);
     original_syscall_table[__NR_read] = syscall_table[__NR_read];
@@ -232,7 +231,6 @@ int install_hooks(void) {
     return 0;
 }
 void uninstall_hooks(void){
-    return ;
     if(!syscall_table) return ;
     echo("sys_call_table address %p\n", syscall_table);
     make_vm_rw((long unsigned int)syscall_table);
