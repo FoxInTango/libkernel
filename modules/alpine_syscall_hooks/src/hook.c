@@ -133,8 +133,8 @@ long unsigned int* lookup_syscall_table(void) {
     int buff_size = 4096;
     char buff[buff_size];
 
-    unsigned int read_offset = 0;
-    unsigned int read_size = 0;
+    int read_offset = 0;
+    int read_size = 0;
     while(read_size = kernel_read(fsym_file, buff, buff_size, read_offset) > 0){
         int index = 0;
         while (index != read_size) {
