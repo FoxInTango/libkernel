@@ -2,6 +2,8 @@
 #include "../../core/kmm.h"
 #include "../../core/echo.h"
 
+#include <string.h>
+
 #include <asm/processor.h>
 #include <asm/unistd.h>
 #include <asm/syscall.h>
@@ -126,25 +128,30 @@ long unsigned int* lookup_syscall_table(void) {
         return 0;
     }
 
-
     int read_size = 4096;
     int tail_size = 128;
 
-    char line[read_size];
-
     char buff[read_size];
-    char tail[tail_size];
 
- //   while(kernel_read(fsym_file, line, 128, 0)){
-        kernel_read(fsym_file, line, 128, 0)
+    unsigned int read_offset = 0;
+
+    while(kernel_read(fsym_file, buff, read_size, read_offset)){
         int index = 0;
         while (index != read_size) {
-            if (line[index] == '\n') {
-                echo("reach line eol");
+            if (buff[index] == '\n') {
+                /**
+                 * 是否 sys_call_table
+                 */
+                 if(0 == strcmp(&buff[index],"sys_call_table",strlen("sys_call_table")){
+                     echo("syscall_table found.\n");
+                     return 1;
+                 }
             }
             index++;
         }
-//    }
+
+        read_offset += read_size;
+    }
     return 0;
 };
 
