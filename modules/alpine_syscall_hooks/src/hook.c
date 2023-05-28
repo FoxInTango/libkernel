@@ -173,7 +173,7 @@ int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, uns
 /** __NR_getdents64
  *
  */
-int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent, unsigned int count){
+int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent, size_t count){
     echo("getdents64\n");
     /*
     struct thread_info* ti = 0;
