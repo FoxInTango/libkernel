@@ -235,7 +235,7 @@ long unsigned int* lookup_syscall_table_by_file(void) {
 };
 
 inline long unsigned int hook_syscall_item(unsigned int index, long unsigned int address){
-    syscall_table = lookup_syscall_table();//(long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    syscall_table = lookup_syscall_table_by_file();//(long unsigned int*)kallsyms_lookup_name("sys_call_table");
     make_vm_rw((long unsigned int)syscall_table);
     original_syscall_table[index] = syscall_table[index];
     syscall_table[index] = (long unsigned int)address;
@@ -245,7 +245,7 @@ inline long unsigned int hook_syscall_item(unsigned int index, long unsigned int
 }
 
 int hook_syscall(hook_s* hooks,unsigned int count){
-    syscall_table = lookup_syscall_table();//(long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    syscall_table = lookup_syscall_table_by_file();//(long unsigned int*)kallsyms_lookup_name("sys_call_table");
     make_vm_rw((long unsigned int)syscall_table);
     int i = 0;
     for(i ;i < (int)count ;i ++){
@@ -256,11 +256,11 @@ int hook_syscall(hook_s* hooks,unsigned int count){
     return i++ ;
 }
 
-int install_hooks_with_table(){ return 1; }
-int install_hooks_with_ftrace(){ return 1;}
+int install_hooks_with_table(void){ return 1; }
+int install_hooks_with_ftrace(void){ return 1;}
 
-void uninstall_hooks_with_table() { return 1; }
-void uninstall_hooks_with_ftrace() { return 1; }
+void uninstall_hooks_with_table(void) { }
+void uninstall_hooks_with_ftrace(void) { }
 
 int install_hooks(void) {
     syscall_table = lookup_syscall_table_by_file();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
