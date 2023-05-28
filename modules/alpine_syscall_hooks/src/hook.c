@@ -180,7 +180,9 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     struct fd f;
     struct file* file = 0;
     struct files_struct* current_files = current->files;
-    file = current->files->fdt->fd[fd];
+
+    if(current_files) { echo("current_files OK.\n");}
+    file = current_files->fdt->fd[fd];
     /*
     struct getdents_callback64 buf = {
         .ctx.actor = filldir64,
