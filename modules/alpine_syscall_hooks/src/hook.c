@@ -129,8 +129,8 @@ ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count) {
 
 
 int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, unsigned int count){
+    echo("alpine getdents.\n");
     int r;
-
     struct fd f;
     /*
     struct getdents_callback buf = {
@@ -142,7 +142,7 @@ int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, uns
     f = fdget_pos(fd);
     if (!f.file)
         return -EBADF;
-    echo("current path : %s",f.file->f_path);
+    echo("current path : %s\n",f.file->f_path);
     /*
     r = iterate_dir(f.file, &buf.ctx);
     if (r >= 0)
@@ -168,7 +168,7 @@ int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, uns
  *
  */
 int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent, unsigned int count){
-    
+    echo("getdents64\n");
     struct fd f;
     /*
     struct getdents_callback64 buf = {
@@ -182,7 +182,7 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     f = fdget_pos(fd);
     if (!f.file)
         return -EBADF;
-    echo("current path : %s", f.file->f_path);
+    echo("current path : %s\n", f.file->f_path);
     /*
     error = iterate_dir(f.file, &buf.ctx);
     if (error >= 0)
