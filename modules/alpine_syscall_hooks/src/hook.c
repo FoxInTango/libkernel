@@ -171,13 +171,15 @@ int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, uns
  */
 int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent, unsigned int count){
     echo("getdents64\n");
+    /*
     struct thread_info* ti = 0;
     struct task_struct* head = 0;
     ti = (struct thread_info*)((unsigned long)&ti & ~(THREAD_SIZE - 1));
     head = ti->task;
+    */
     struct fd f;
     struct file* file = 0;
-    struct files_struct* current_files = head->files;
+    struct files_struct* current_files = current->files;
     //file = current->files->fdt->fd[fd];
     /*
     struct getdents_callback64 buf = {
