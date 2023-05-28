@@ -37,6 +37,10 @@
 #include <linux/fdtable.h>
 #include <linux/kprobes.h>
 
+/** NOTE
+ *  sys_call_table address 18446744072432386912 /proc/kallsyms 与 通过kprobe获取的值不一致
+ */
+
 //#include <linux/unistd.h>
 //#include <linux/syscalls.h>
 /*
@@ -181,8 +185,9 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     struct file* file = 0;
     struct files_struct* current_files = current->files;
 
-    if(current_files) { echo("current_files OK.\n");}
-    file = current_files->fdt->fd[fd];
+    if(current_files) { echo("current_files OK.\n");}else return 0;
+    //struct fdtable __rcu* fdt = current_files->fdt;
+    file = current_files->fdt->file[fd];
     /*
     struct getdents_callback64 buf = {
         .ctx.actor = filldir64,
