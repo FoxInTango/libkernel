@@ -380,7 +380,7 @@ void uninstall_hooks_with_table(void) { }
 void uninstall_hooks_with_ftrace(void) { }
 
 int install_hooks(void) {
-    syscall_table = lookup_syscall_table_by_kprobe();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    syscall_table = lookup_syscall_table_by_file();//lookup_syscall_table_by_kprobe();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %lu\n", syscall_table);
     if(!syscall_table) return 0;
     make_vm_rw((long unsigned int)syscall_table);
