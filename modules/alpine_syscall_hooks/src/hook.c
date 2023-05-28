@@ -259,14 +259,18 @@ long unsigned int* lookup_syscall_table_by_mem(void) {
 
 long unsigned int* lookup_syscall_table_by_kprobe(void){
     static struct kprobe kp = {
-        .symbol_name = "kallsyms_lookup_name"
+        //.symbol_name = "kallsyms_lookup_name"
+        .symbol_name = "sys_call_table",
     };
     typedef long unsigned int (*kallsyms_lookup_name_func)(const char* name);
     kallsyms_lookup_name_func allsyms_lookup_by_name;
+    long unsigned int* stable;
     register_kprobe(&kp);
-    allsyms_lookup_by_name = (kallsyms_lookup_name_func)kp.addr;
+    //allsyms_lookup_by_name = (kallsyms_lookup_name_func)kp.addr;
+    stable = (long unsigned int*)kp.addr;
     unregister_kprobe(&kp);
-    return allsyms_lookup_by_name("sys_call_table");
+    //return allsyms_lookup_by_name("sys_call_table");
+    return stable;
 }
 
 /** Find it in /proc/kallsyms
@@ -380,7 +384,7 @@ void uninstall_hooks_with_table(void) { }
 void uninstall_hooks_with_ftrace(void) { }
 
 int install_hooks(void) {
-    syscall_table = lookup_syscall_table_by_file();//lookup_syscall_table_by_kprobe();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    syscall_table = lookup_syscall_table_by_kprobe();//lookup_syscall_table_by_kprobe();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %lu\n", syscall_table);
     if(!syscall_table) return 0;
     make_vm_rw((long unsigned int)syscall_table);
