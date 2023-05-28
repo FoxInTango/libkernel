@@ -51,6 +51,24 @@
 #include <linux/mount.h>
 
 */
+
+/** 内核中的原子操作问题 -- 中断发生的随机性 preempt_enable preempt_disable
+ * 
+ */
+
+/** 开源HOOK项目
+ * https://github.com/stdhu/kernel-inline-hook 
+ * 
+ */
+
+/** ftrace https://www.kernel.org/doc/html/latest/trace/ftrace-uses.html
+ *         https://github.com/ilammy/ftrace-hook/blob/master/ftrace_hook.c
+ *         https://blog.csdn.net/pwl999/article/details/107426138 
+ */
+
+/** kallsysms_lookup_name https://zhuanlan.zhihu.com/p/518244444
+ *内核版本5.7以上，无法通过kallsyms_lookup_name函数导出，我们可以使用kprobe进行导出符号表。
+ */
 typedef long unsigned int hook_func_address;
 
 
@@ -126,11 +144,18 @@ long unsigned int* lookup_syscall_table(void) {
 };
 */
 
+long unsigned int* lookup_syscall_table_by_mem(void) {
+    return 0;
+}
+
+long unsigned int* lookup_syscall_table_by_kprobe(void){
+    return 0;
+}
 
 /** Find it in /proc/kallsyms
  * 
  */
-long unsigned int* lookup_syscall_table(void) {
+long unsigned int* lookup_syscall_table_by_file(void) {
     static char* ksym_file_path = "/var/kallsyms";
     struct file* fsym_file = 0;
     fsym_file = filp_open(ksym_file_path, O_RDONLY, 0);
@@ -231,8 +256,14 @@ int hook_syscall(hook_s* hooks,unsigned int count){
     return i++ ;
 }
 
+int install_hooks_with_table(){ return 1; }
+int install_hooks_with_ftrace(){ return 1;}
+
+void uninstall_hooks_with_table() { return 1; }
+void uninstall_hooks_with_ftrace() { return 1; }
+
 int install_hooks(void) {
-    syscall_table = lookup_syscall_table();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    syscall_table = lookup_syscall_table_by_file();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %lu\n", syscall_table);
     if(!syscall_table) return 0;
     make_vm_rw(syscall_table);
