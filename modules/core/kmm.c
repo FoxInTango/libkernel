@@ -6,6 +6,7 @@
 #include <linux/module.h>
 #include <linux/slab.h>
 #include <linux/string.h>
+#include <asm/pgtable.h>
 
 #include "echo.h"
 #include "kmm.h"
