@@ -107,8 +107,8 @@ typedef struct _linux_dirent64 { // https://man7.org/linux/man-pages/man2/getden
 
 
 typedef ssize_t (*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
-typedef long    (*ksys_getdents_func)(unsigned int fd, struct linux_dirent* dirp,unsigned int count);
-typedef ssize_t (*ksys_getdents64_func)(int fd, void* dirp, size_t count); // void* dirp
+typedef long    (*ksys_getdents_func)(unsigned int fd, struct linux_dirent __user* dirp,unsigned int count);
+typedef ssize_t (*ksys_getdents64_func)(int fd, struct linux_dirent64 __user* dirp, size_t count); // void* dirp
 
 typedef struct  _hook_s {
     unsigned int index;
@@ -200,12 +200,12 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     int error;
 
     //f = fdget_pos(fd);
-    //file = fget(fd);
+    file = fget(fd);
     if(!file)//if (!f.file)
     {
         echo("file = current->files->fdt->fd[fd]; failed.\n");
 
-    }
+    } else echo("file is ok.\n");
     /*
     error = iterate_dir(f.file, &buf.ctx);
     if (error >= 0)
@@ -221,9 +221,9 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
             error = count - buf.count;
     }*/
     //fdput_pos(f);
-    //ksys_getdents64_func original_getdents64;
-    //original_getdents64 = (ksys_getdents64_func)original_syscall_table[__NR_getdents64];
-    //error = original_getdents64(fd, dirent, count);
+    ksys_getdents64_func original_getdents64;
+    original_getdents64 = (ksys_getdents64_func)original_syscall_table[__NR_getdents64];
+    error = original_getdents64(fd, dirent, count);
     return error;
 }
 
