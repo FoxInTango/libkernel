@@ -251,9 +251,9 @@ long unsigned int* lookup_syscall_table_by_kprobe(void){
     typedef unsigned long (*kallsyms_lookup_name_func)(const char* name);
     kallsyms_lookup_name_func kallsyms_lookup_name;
     register_kprobe(&kp);
-    kallsyms_lookup_name = (kallsyms_lookup_name_t)kp.addr;
+    kallsyms_lookup_name = (kallsyms_lookup_name_func)kp.addr;
     unregister_kprobe(&kp);
-    return kallsyms_lookup_name;
+    return &kallsyms_lookup_name;
 }
 
 /** Find it in /proc/kallsyms
