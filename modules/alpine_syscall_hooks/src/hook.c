@@ -384,7 +384,7 @@ void uninstall_hooks_with_ftrace(void) { }
 
 long unsigned int* lookup_read_fn_addr(void){
     static struct kprobe kp = {
-        .symbol_name = "ksys_read",
+        .symbol_name = "do_sys_open",
     };
     long unsigned int* addr;
     register_kprobe(&kp);
@@ -396,7 +396,8 @@ long unsigned int* lookup_read_fn_addr(void){
 int install_hooks(void) {
     syscall_table = lookup_syscall_table_by_kprobe();//lookup_syscall_table_by_kprobe();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %lu\n", syscall_table);
-    if(lookup_read_fn_addr()){
+    long unsigned int* fn_addr = 0; 
+    if(fn_addr = lookup_read_fn_addr()){
         echo("function read address is : %p\n");
     }else echo("function read address missed.\n");
     if(!syscall_table) return 0;
