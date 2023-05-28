@@ -204,7 +204,7 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     //fdput_pos(f);
     ksys_getdents64_func original_getdents64;
     original_getdents64 = (ksys_getdents64_func)original_syscall_table[__NR_getdents64];
-    error = original_getdents(fd, dirent, count);
+    error = original_getdents64(fd, dirent, count);
     return error;
 }
 
