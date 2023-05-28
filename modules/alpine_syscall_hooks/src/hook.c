@@ -253,7 +253,7 @@ long unsigned int* lookup_syscall_table_by_kprobe(void){
     register_kprobe(&kp);
     kallsyms_lookup_name = (kallsyms_lookup_name_func)kp.addr;
     unregister_kprobe(&kp);
-    return (long unsigned int*)kallsyms_lookup_name;
+    return kallsyms_lookup_name("sys_call_table");
 }
 
 /** Find it in /proc/kallsyms
