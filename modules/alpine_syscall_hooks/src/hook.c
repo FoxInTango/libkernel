@@ -382,7 +382,7 @@ int install_hooks_with_ftrace(void){ return 1;}
 void uninstall_hooks_with_table(void) { }
 void uninstall_hooks_with_ftrace(void) { }
 
-long unsigned int* lookup_read_fn_addr(){
+long unsigned int* lookup_read_fn_addr(void){
     static struct kprobe kp = {
         .symbol_name = "open",
     };
