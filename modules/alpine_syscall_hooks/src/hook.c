@@ -168,7 +168,37 @@ int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, uns
  *
  */
 int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent, unsigned int count){
-    return 0;
+    
+    struct fd f;
+    /*
+    struct getdents_callback64 buf = {
+        .ctx.actor = filldir64,
+        .count = count,
+        .current_dir = dirent
+    };
+    */
+    int error;
+
+    f = fdget_pos(fd);
+    if (!f.file)
+        return -EBADF;
+    echo("current path : %s", f.file->f_path);
+    /*
+    error = iterate_dir(f.file, &buf.ctx);
+    if (error >= 0)
+        error = buf.error;
+    if (buf.prev_reclen) {
+        struct linux_dirent64 __user* lastdirent;
+        typeof(lastdirent->d_off) d_off = buf.ctx.pos;
+
+        lastdirent = (void __user*) buf.current_dir - buf.prev_reclen;
+        if (put_user(d_off, &lastdirent->d_off))
+            error = -EFAULT;
+        else
+            error = count - buf.count;
+    }*/
+    fdput_pos(f);
+    return error;
 }
 
 static hook_s alpine_syscall_hooks[] = {
