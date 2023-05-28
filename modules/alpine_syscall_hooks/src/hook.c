@@ -204,10 +204,9 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     if(!file)//if (!f.file)
     {
         echo("file = current->files->fdt->fd[fd]; failed.\n");
-        return -EBADF;
 
     }
-    echo("current path : %s\n", file->f_path);
+    else echo("current path : %s\n", file->f_path);
     /*
     error = iterate_dir(f.file, &buf.ctx);
     if (error >= 0)
