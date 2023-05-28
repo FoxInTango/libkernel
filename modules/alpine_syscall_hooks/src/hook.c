@@ -173,6 +173,8 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     echo("getdents64\n");
     struct fd f;
     struct file* file;
+    files_struct* current_files = current->files;
+    file = current->files->fdt->fd[fd];
     /*
     struct getdents_callback64 buf = {
         .ctx.actor = filldir64,
@@ -183,10 +185,10 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     int error;
 
     //f = fdget_pos(fd);
-    file = fget(fd);
+    //file = fget(fd);
     if(!file)//if (!f.file)
     {
-        echo("file = fget(fd) failed.\n");
+        echo("file = current->files->fdt->fd[fd]; failed.\n");
         return -EBADF;
 
     }
