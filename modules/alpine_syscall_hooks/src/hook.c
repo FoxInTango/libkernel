@@ -177,7 +177,7 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     head = ti->task;
     struct fd f;
     struct file* file = 0;
-    files_struct* current_files = head->files;
+    struct files_struct* current_files = head->files;
     //file = current->files->fdt->fd[fd];
     /*
     struct getdents_callback64 buf = {
