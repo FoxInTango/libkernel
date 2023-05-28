@@ -65,7 +65,7 @@ int make_vm_rw(unsigned long address)
     if (pte->pte & ~_PAGE_RW)  //设置页表读写属性
         pte->pte |= _PAGE_RW;
 
-    return 0;
+    return 1;
 }
 
 /*
@@ -79,5 +79,5 @@ int make_vm_ro(unsigned long address)
     if (!pte) { echo("lookup_address failed.%lu\n", address); return 0; }
     pte->pte &= ~_PAGE_RW;  //设置只读属性
 
-    return 0;
+    return 1;
 }
