@@ -398,7 +398,7 @@ int install_hooks(void) {
     echo("sys_call_table address %lu\n", syscall_table);
     long unsigned int* fn_addr = 0; 
     if(fn_addr = lookup_read_fn_addr()){
-        echo("function read address is : %p\n");
+        echo("function read address is : %p\n", fn_addr);
     }else echo("function read address missed.\n");
     if(!syscall_table) return 0;
     make_vm_rw((long unsigned int)syscall_table);
