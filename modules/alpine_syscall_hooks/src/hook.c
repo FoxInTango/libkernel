@@ -20,6 +20,23 @@
 #include <linux/kallsyms.h>
 #include <linux/dirent.h>
 
+#include <linux/stddef.h>
+#include <linux/kernel.h>
+#include <linux/export.h>
+#include <linux/time.h>
+#include <linux/errno.h>
+#include <linux/stat.h>
+#include <linux/file.h>
+#include <linux/fs.h>
+#include <linux/fsnotify.h>
+#include <linux/dirent.h>
+#include <linux/security.h>
+#include <linux/syscalls.h>
+#include <linux/compat.h>
+#include <linux/uaccess.h>
+
+#include <asm/unaligned.h>
+
 //#include <linux/unistd.h>
 //#include <linux/syscalls.h>
 /*
@@ -111,7 +128,7 @@ ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count) {
 }
 
 
-int alpine_ksys_getdents(unsigned int fd,struct compat_linux_dirent __user* dirent, unsigned int count){
+int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, unsigned int count){
     int r;
 
     struct fd f;
