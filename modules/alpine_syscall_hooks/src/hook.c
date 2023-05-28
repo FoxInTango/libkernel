@@ -363,6 +363,8 @@ int install_hooks(void) {
     syscall_table = lookup_syscall_table_by_file();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %lu\n", syscall_table);
     if(!syscall_table) return 0;
+
+    return 0;
     make_vm_rw(syscall_table);
 
     /** read
