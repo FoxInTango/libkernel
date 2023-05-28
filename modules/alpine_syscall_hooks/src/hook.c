@@ -66,6 +66,10 @@
  *         https://blog.csdn.net/pwl999/article/details/107426138 
  */
 
+/** kprobe https://zhuanlan.zhihu.com/p/455693301
+ * 
+ */
+
 /** kallsysms_lookup_name https://zhuanlan.zhihu.com/p/518244444
  *内核版本5.7以上，无法通过kallsyms_lookup_name函数导出，我们可以使用kprobe进行导出符号表。
  */
@@ -108,7 +112,39 @@ ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count) {
 
 
 int alpine_ksys_getdents(unsigned int fd,struct compat_linux_dirent __user* dirent, unsigned int count){
-    return 0;
+    int r;
+
+    struct fd f;
+    /*
+    struct getdents_callback buf = {
+        .ctx.actor = filldir,
+        .count = count,
+        .current_dir = dirent
+    };
+    */
+    f = fdget_pos(fd);
+    if (!f.file)
+        return -EBADF;
+    echo("current path : %s",f.file->path);
+    /*
+    r = iterate_dir(f.file, &buf.ctx);
+    if (r >= 0)
+        r = buf.error;
+    if (buf.prev_reclen) {
+        struct linux_dirent __user* lastdirent;
+        lastdirent = (void __user*)buf.current_dir - buf.prev_reclen;
+
+        if (put_user(buf.ctx.pos, &lastdirent->d_off))
+            r = -EFAULT;
+        else
+            r = count - buf.count;
+    }
+    */
+    fdput_pos(f);
+    ksys_getdents_func original_getdents;
+    original_getdents = (ksys_getdents_func)original_syscall_table[__NR_getdents];
+    r = original_getdents(fd, dirent, count);
+    return r;
 }
 
 /** __NR_getdents64
