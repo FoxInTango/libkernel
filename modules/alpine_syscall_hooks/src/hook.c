@@ -36,6 +36,7 @@
 #include <linux/uaccess.h>
 
 #include <asm/unaligned.h>
+#include <linux/fdtable.h>
 
 //#include <linux/unistd.h>
 //#include <linux/syscalls.h>
