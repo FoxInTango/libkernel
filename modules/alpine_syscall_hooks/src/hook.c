@@ -188,6 +188,7 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     {
         echo("file = fget(fd) failed.\n");
         return -EBADF;
+
     }
     echo("current path : %s\n", file->f_path);
     /*
