@@ -132,6 +132,7 @@ int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, uns
     echo("alpine getdents.\n");
     int r;
     struct fd f;
+    struct file* file;
     /*
     struct getdents_callback buf = {
         .ctx.actor = filldir,
@@ -139,8 +140,9 @@ int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, uns
         .current_dir = dirent
     };
     */
-    f = fget(fd);//fdget_pos(fd);
-    if (!f.file)
+    //f = fdget_pos(fd);
+    file = fget(fd);
+    if(!file) // if (!f.file)
         return -EBADF;
     echo("current path : %s\n",f.file->f_path);
     /*
@@ -170,6 +172,7 @@ int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, uns
 int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent, unsigned int count){
     echo("getdents64\n");
     struct fd f;
+    struct file* file;
     /*
     struct getdents_callback64 buf = {
         .ctx.actor = filldir64,
@@ -179,8 +182,9 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     */
     int error;
 
-    f = fget(fd);//fdget_pos(fd);
-    if (!f.file)
+    //f = fdget_pos(fd);
+    file = fget(fd);
+    if(!file)//if (!f.file)
         return -EBADF;
     echo("current path : %s\n", f.file->f_path);
     /*
