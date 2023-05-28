@@ -187,7 +187,9 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
 
     if(current_files) { echo("current_files OK.\n");}else return 0;
     struct fdtable* fdt = current_files->fdt;
-    file = fdt->fd[fd];
+    if(fdt) { echo("fdt OK.\n"); } else return 0;
+    echo("fdt max_fd : %iu,current fd : %d\n",fdt->max_fds,fd);
+    //file = fdt->fd[fd];
     /*
     struct getdents_callback64 buf = {
         .ctx.actor = filldir64,
