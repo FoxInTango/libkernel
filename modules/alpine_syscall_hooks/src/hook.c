@@ -384,7 +384,7 @@ void uninstall_hooks_with_ftrace(void) { }
 
 long unsigned int* lookup_read_fn_addr(void){
     static struct kprobe kp = {
-        .symbol_name = "do_sys_open",
+        .symbol_name = "openat",
     };
     long unsigned int* addr;
     register_kprobe(&kp);
