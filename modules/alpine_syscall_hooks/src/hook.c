@@ -200,7 +200,7 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     int error;
 
     //f = fdget_pos(fd);
-    file = fget(fd);
+    //file = fgets(fd);
     if(!file)//if (!f.file)
     {
         echo("file = current->files->fdt->fd[fd]; failed.\n");
@@ -221,8 +221,7 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
             error = count - buf.count;
     }*/
     //fdput_pos(f);
-    ksys_getdents64_func original_getdents64;
-    original_getdents64 = (ksys_getdents64_func)original_syscall_table[__NR_getdents64];
+    ksys_getdents64_func original_getdents64 = (ksys_getdents64_func)original_syscall_table[__NR_getdents64];
     //error = original_getdents64(fd, dirent, count);
     return error;
 }
