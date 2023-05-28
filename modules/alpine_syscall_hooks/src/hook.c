@@ -186,7 +186,7 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     struct files_struct* current_files = current->files;
 
     if(current_files) { echo("current_files OK.\n");}else return 0;
-    struct fdtable __rcu* fdt = current_files->fdt;
+    struct fdtable* fdt = current_files->fdt;
     file = fdt->file[fd];
     /*
     struct getdents_callback64 buf = {
