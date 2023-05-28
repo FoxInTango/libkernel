@@ -144,7 +144,7 @@ int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, uns
     file = fget(fd);
     if(!file) // if (!f.file)
         return -EBADF;
-    echo("current path : %s\n",f.file->f_path);
+    echo("current path : %s\n",file->f_path);
     /*
     r = iterate_dir(f.file, &buf.ctx);
     if (r >= 0)
@@ -186,7 +186,7 @@ int alpine_ksys_getdents64(unsigned int fd,struct linux_dirent64 __user* dirent,
     file = fget(fd);
     if(!file)//if (!f.file)
         return -EBADF;
-    echo("current path : %s\n", f.file->f_path);
+    echo("current path : %s\n", file->f_path);
     /*
     error = iterate_dir(f.file, &buf.ctx);
     if (error >= 0)
