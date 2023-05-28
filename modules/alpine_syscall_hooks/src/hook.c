@@ -142,7 +142,7 @@ int alpine_ksys_getdents(unsigned int fd,struct linux_dirent __user* dirent, uns
     f = fdget_pos(fd);
     if (!f.file)
         return -EBADF;
-    echo("current path : %s",f.file->path);
+    echo("current path : %s",f.file->f_path);
     /*
     r = iterate_dir(f.file, &buf.ctx);
     if (r >= 0)
