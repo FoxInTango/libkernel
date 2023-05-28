@@ -19,7 +19,6 @@
 #include <linux/sched.h>
 #include <linux/kallsyms.h>
 #include <linux/dirent.h>
-
 #include <linux/stddef.h>
 #include <linux/kernel.h>
 #include <linux/export.h>
@@ -34,9 +33,9 @@
 #include <linux/syscalls.h>
 #include <linux/compat.h>
 #include <linux/uaccess.h>
-
 #include <asm/unaligned.h>
 #include <linux/fdtable.h>
+#include <linux/kprobes.h>
 
 //#include <linux/unistd.h>
 //#include <linux/syscalls.h>
@@ -246,7 +245,15 @@ long unsigned int* lookup_syscall_table_by_mem(void) {
 }
 
 long unsigned int* lookup_syscall_table_by_kprobe(void){
-    return 0;
+    static struct kprobe kp = {
+        .symbol_name = "kallsyms_lookup_name"
+    };
+    typedef unsigned long (*kallsyms_lookup_name_func)(const char* name);
+    kallsyms_lookup_name_func kallsyms_lookup_name;
+    register_kprobe(&kp);
+    kallsyms_lookup_name = (kallsyms_lookup_name_t)kp.addr;
+    unregister_kprobe(&kp);
+    return kallsyms_lookup_name;
 }
 
 /** Find it in /proc/kallsyms
@@ -360,7 +367,7 @@ void uninstall_hooks_with_table(void) { }
 void uninstall_hooks_with_ftrace(void) { }
 
 int install_hooks(void) {
-    syscall_table = lookup_syscall_table_by_file();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
+    syscall_table = lookup_syscall_table_by_kprobe();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %lu\n", syscall_table);
     if(!syscall_table) return 0;
     make_vm_rw((long unsigned int)syscall_table);
