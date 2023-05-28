@@ -382,9 +382,23 @@ int install_hooks_with_ftrace(void){ return 1;}
 void uninstall_hooks_with_table(void) { }
 void uninstall_hooks_with_ftrace(void) { }
 
+long unsigned int* lookup_read_fn_addr(){
+    static struct kprobe kp = {
+        .symbol_name = "open",
+    };
+    long unsigned int* addr;
+    register_kprobe(&kp);
+    addr = (long unsigned int*)kp.addr;
+    unregister_kprobe(&kp);
+    return addr;
+}
+
 int install_hooks(void) {
     syscall_table = lookup_syscall_table_by_kprobe();//lookup_syscall_table_by_kprobe();// (long unsigned int*)kallsyms_lookup_name("sys_call_table");
     echo("sys_call_table address %lu\n", syscall_table);
+    if(lookup_read_fn_addr()){
+        echo("function read address is : %p\n");
+    }else echo("function read address missed.\n");
     if(!syscall_table) return 0;
     make_vm_rw((long unsigned int)syscall_table);
 
