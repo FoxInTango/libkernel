@@ -2,8 +2,6 @@
 #include "../../core/kmm.h"
 #include "../../core/echo.h"
 
-#include <libcpp/libcpp.h>
-
 #include <linux/string.h>
 
 #include <asm/processor.h>
