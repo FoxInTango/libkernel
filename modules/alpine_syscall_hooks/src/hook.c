@@ -79,6 +79,7 @@
 
 /** 开源HOOK项目
  * https://github.com/stdhu/kernel-inline-hook 
+ * https://github.com/WeiJiLab/kernel-hook-framework
  * 
  */
 
