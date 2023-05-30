@@ -95,7 +95,7 @@
 /** kallsysms_lookup_name https://zhuanlan.zhihu.com/p/518244444
  *内核版本5.7以上，无法通过kallsyms_lookup_name函数导出，我们可以使用kprobe进行导出符号表。
  */
-typedef long unsigned int hook_func_address;
+
 
 
 typedef struct _linux_dirent64 { // https://man7.org/linux/man-pages/man2/getdents.2.html
@@ -110,11 +110,6 @@ typedef struct _linux_dirent64 { // https://man7.org/linux/man-pages/man2/getden
 typedef ssize_t (*ksys_read_func)(unsigned int fd, char __user* buf, size_t count);
 typedef long    (*ksys_getdents_func)(unsigned int fd, struct linux_dirent __user* dirp,unsigned int count);
 typedef ssize_t (*ksys_getdents64_func)(int fd, struct linux_dirent64 __user* dirp, unsigned int count); // void* dirp
-
-typedef struct  _hook_s {
-    unsigned int index;
-    hook_func_address address;
-}hook_s;
 
 static long unsigned int* original_syscall_table[512];
 static long unsigned int* syscall_table = 0;
