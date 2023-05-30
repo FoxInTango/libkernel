@@ -62,11 +62,11 @@ CORE_OBJECTS := ../core/echo.o ../core/kmm.o ../core/support.cpp.o
 
 MODULE_NAME := alpine_syscall_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
-FLAGS       := -Wall -I /home/sparrow/alpine/inc
+FLAGS       := -Wall -I /home/sparrow/alpine/inc -I ${KERNEL}/include
 KMOD_DIR    := $(shell pwd) 
 MODULE_OBJECTS := $(LIBCPP_OBJECTS) $(CORE_OBJECTS) ./src/module.o ./src/hook.o 
 
-ccflags-y += $(FLAGS) -I ${KERNEL}/include
+ccflags-y += $(FLAGS)
 
 # Apply C flags to the cpp compiler and disable cpp features that can't be supported in the kernel module
 cxx-selected-flags = $(shell echo $(KBUILD_CFLAGS) \
