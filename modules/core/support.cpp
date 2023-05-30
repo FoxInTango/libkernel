@@ -5,10 +5,6 @@
 #include "kmm.h"
 #include "echo.h"
 
-#include <asm/processor.h>
-#include <asm/unistd.h>
-#include <asm/syscall.h>
-
 #include <linux/mm.h>
 
 #include <cstddef>
