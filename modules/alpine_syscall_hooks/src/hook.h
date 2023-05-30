@@ -6,7 +6,8 @@ extern "C" {
 #endif
 typedef long unsigned int hook_func_address;
 typedef struct  _hook_s {
-    char* target;
+    //char* target;
+    long unsigned int index;
     hook_func_address address;
 }hook_s;
 
