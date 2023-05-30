@@ -66,7 +66,7 @@ ARCH        := x86
 #                                                                                                        https://lkml.iu.edu/hypermail/linux/kernel/1911.1/06435.html
 FLAGS       := -Wall -I /home/sparrow/alpine/inc -I ${KERNEL}/include -I ${KERNEL}/arch/$(ARCH)/include #-I ${KERNEL}/arch/$(ARCH)/include/generated
 KMOD_DIR    := $(shell pwd) 
-MODULE_OBJECTS := $(LIBCPP_OBJECTS) $(CORE_OBJECTS) ./src/module.o ./src/hook.o 
+MODULE_OBJECTS := $(LIBCPP_OBJECTS) $(CORE_OBJECTS) ./src/module.o ./scr/syscall.o ./src/hook.cpp.o 
 
 ccflags-y += $(FLAGS)
 
