@@ -66,7 +66,7 @@ FLAGS       := -Wall -I /home/sparrow/alpine/inc
 KMOD_DIR    := $(shell pwd) 
 MODULE_OBJECTS := $(LIBCPP_OBJECTS) $(CORE_OBJECTS) ./src/module.o ./src/hook.o 
 
-ccflags-y += $(FLAGS)
+ccflags-y += $(FLAGS) -I ${KERNEL}/include
 
 # Apply C flags to the cpp compiler and disable cpp features that can't be supported in the kernel module
 cxx-selected-flags = $(shell echo $(KBUILD_CFLAGS) \
@@ -106,15 +106,15 @@ $(MODULE_NAME).ko:
 	@echo LIBCPP C++目标文件: ${LIBCPP_OBJECTS_PP}
 	@echo ************************SUPER************************
 	make -C $(KERNEL) M=$(KMOD_DIR) modules # https://blog.csdn.net/wang20122013/article/details/120718939
-	-rm $(LIBCPP_ROOT)/src/*.o # 删除生成文件
+	-rm $(LIBCPP_ROOT)/src/*.cpp.o # 删除生成文件
 	-rm $(CORE_ROOT)/*.o
 
 cxx-prefix := " $(HOSTCXX) [M]  "
 
-#%.cpp.o: %.cpp
-#	@echo $(cxx-prefix)$@
-#	@$(HOSTCXX) $(cxxflags) -c $< -o $@
-#	@echo -n > $$(dirname $@)/.$$(basename $@).cmd
+%.cpp.o: %.cpp
+	@echo $(cxx-prefix)$@
+	@$(HOSTCXX) $(cxxflags) -c $< -o $@
+	@echo -n > $$(dirname $@)/.$$(basename $@).cmd
 
 .PHONY: clean
 clean:cl_core cl_cpp
