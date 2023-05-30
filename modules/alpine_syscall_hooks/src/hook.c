@@ -1,4 +1,4 @@
-#include "ftrace.h"
+#include "hook.h"
 
 /** https://www.kernel.org/doc/html/latest/trace/ftrace-uses.html
  *  https://kernel-doc.readthedocs.io/zh_CN/latest/trace/ftrace-uses.html

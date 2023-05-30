@@ -6,9 +6,12 @@ extern "C" {
 #endif
 typedef long unsigned int hook_func_address;
 typedef struct  _hook_s {
-    long unsigned int index;
+    char* target;
     hook_func_address address;
 }hook_s;
+
+/** syscall hooks
+ */
 
 int  install_hooks(void);
 void uninstall_hooks(void);
