@@ -7,6 +7,7 @@
 #include <asm/unistd.h>
 #include <asm/syscall.h>
 
+#include <linux/filter.h>
 #include <linux/mm.h>
 
 #include <cstddef>
