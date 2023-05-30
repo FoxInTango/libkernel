@@ -5,8 +5,6 @@
 #include "kmm.h"
 #include "echo.h"
 
-#include <linux/mm.h>
-
 #include <cstddef>
 void *operator new(size_t sz) throw ()
 {
