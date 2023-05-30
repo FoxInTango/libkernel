@@ -2,18 +2,16 @@
  * Kernel C++ support
  */
 
+#include "kmm.h"
+#include "echo.h"
 
 #include <asm/processor.h>
 #include <asm/unistd.h>
 #include <asm/syscall.h>
 
-#include <linux/filter.h>
 #include <linux/mm.h>
 
 #include <cstddef>
-#include "kmm.h"
-#include "echo.h"
-
 void *operator new(size_t sz) throw ()
 {
     return kcmalloc(sz);
