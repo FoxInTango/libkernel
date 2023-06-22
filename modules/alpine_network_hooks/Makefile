@@ -25,8 +25,8 @@ LIBCPP_SOURCES_CC  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.c))
 LIBCPP_OBJECTS_CC  += $(LIBCPP_RELATIVE)$(patsubst %.c,%.o,$(notdir $(LIBCPP_SOURCES_CC)))
 
 LIBCPP_SOURCES_PP  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
-#LIBCPP_OBJECTS_PP  += $(LIBCPP_RELATIVE)$(patsubst %.cpp,%.cpp.o,$(notdir $(LIBCPP_SOURCES_PP)))
-LIBCPP_OBJECTS_PP  += $(patsubst %.cpp,%.cpp.o,$(LIBCPP_SOURCES_PP))
+LIBCPP_OBJECTS_PP  += $(LIBCPP_ROOT)/src/$(patsubst %.cpp,%.cpp.o,$(notdir $(LIBCPP_SOURCES_PP)))
+#LIBCPP_OBJECTS_PP  += $(patsubst %.cpp,%.cpp.o,$(LIBCPP_SOURCES_PP))
 
 LIBCPP_OBJECTS := ../../../libcpp/src/libcpp.cpp.o
 LIBCPP_OBJECTS += ../../../libcpp/src/error.cpp.o
