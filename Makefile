@@ -103,9 +103,9 @@ endif
 
 TARGETS += mk_module_dir
 TARGETS += alpine_syscall_hooks
-#TARGETS += alpine_network_hooks
-#TARGETS += alpine_vfs
-#TARGETS += alpine_vnw
+TARGETS += alpine_network_hooks
+TARGETS += alpine_vfs
+TARGETS += alpine_vnw
 
 ALL : $(TARGETS)
 
