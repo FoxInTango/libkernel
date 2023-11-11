@@ -28,6 +28,7 @@ LIBCPP_SOURCES_PP  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
 LIBCPP_OBJECTS_PP  += $(LIBCPP_RELATIVE)$(patsubst %.cpp,%.cpp.o,$(notdir $(LIBCPP_SOURCES_PP)))
 
 LIBCPP_OBJECTS := ../../../libcpp/src/libcpp.cpp.o
+LIBCPP_OBJECTS += ../../../libcpp/src/error.cpp.o
 
 # ****************core****************
 CORE_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))../core
