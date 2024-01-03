@@ -21,16 +21,15 @@ LIBCPP_DIR_BESIDES += -o -path ${LIBCPP_ROOT}/.trash
 LIBCPP_DIR_BESIDES += \)
 LIBCPP_DIRS   = $(shell find $(LIBCPP_ROOT) $(LIBCPP_DIR_BESIDES) -prune -o -type d -print)
 
-LIBCPP_OBJECTS  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.c))
-LIBCPP_OBJECTS  += $(LIBCPP_RELATIVE)$(patsubst %.c,%.o,$(notdir $(LIBCPP_SOURCES_CC)))
+LIBCPP_SOURCES_CC  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.c))
+LIBCPP_OBJECTS_CC  += $(LIBCPP_RELATIVE)$(patsubst %.c,%.o,$(notdir $(LIBCPP_SOURCES_CC)))
 
-LIBCPP_OBJECTS  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
-LIBCPP_OBJECTS  += $(LIBCPP_ROOT)/src/$(patsubst %.cpp,%.cpp.o,$(notdir $(LIBCPP_SOURCES_PP)))
-LIBCPP_OBJECTS  += $(patsubst %.cpp,%.cpp.o,$(LIBCPP_SOURCES_PP))
+LIBCPP_SOURCES_PP  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
+LIBCPP_OBJECTS_PP  += $(LIBCPP_ROOT)/$(patsubst %.cpp,%.cpp.o,$(notdir $(LIBCPP_SOURCES_PP)))
 
-#LIBCPP_OBJECTS := ../../../libcpp/src/libcpp.cpp.o
-#LIBCPP_OBJECTS := ../../../libcpp/src/object.cpp.o
-#LIBCPP_OBJECTS += ../../../libcpp/src/string.cpp.o
+LIBCPP_OBJECTS := ../../../libcpp/src/libcpp.cpp.o
+LIBCPP_OBJECTS := ../../../libcpp/src/object.cpp.o
+LIBCPP_OBJECTS += ../../../libcpp/src/string.cpp.o
 
 # ****************core****************
 CORE_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))../core
