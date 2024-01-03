@@ -19,7 +19,7 @@ LIBCPP_DIR_BESIDES += -path    ${LIBCPP_ROOT}/lib
 LIBCPP_DIR_BESIDES += -o -path ${LIBCPP_ROOT}/obj
 LIBCPP_DIR_BESIDES += -o -path ${LIBCPP_ROOT}/.trash
 LIBCPP_DIR_BESIDES += \)
-LIBCPP_DIRS   = $(shell find $(LIBCPP_ROOT) $(LIBCPP_DIR_BESIDES) -prune -o -type d -print)
+LIBCPP_DIRS   = $(shell find $(LIBCPP_RELATIVE) $(LIBCPP_RELATIVE) -prune -o -type d -print)
 
 LIBCPP_SOURCES_CC  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.c))
 LIBCPP_OBJECTS_CC  += $(LIBCPP_ROOT)/$(patsubst %.c,%.o,$(notdir $(LIBCPP_SOURCES_CC)))
