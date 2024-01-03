@@ -29,7 +29,8 @@ LIBCPP_OBJECTS_PP  += $(LIBCPP_ROOT)/src/$(patsubst %.cpp,%.cpp.o,$(notdir $(LIB
 #LIBCPP_OBJECTS_PP  += $(patsubst %.cpp,%.cpp.o,$(LIBCPP_SOURCES_PP))
 
 LIBCPP_OBJECTS := ../../../libcpp/src/libcpp.cpp.o
-LIBCPP_OBJECTS += ../../../libcpp/src/error.cpp.o
+LIBCPP_OBJECTS := ../../../libcpp/src/object.cpp.o
+LIBCPP_OBJECTS += ../../../libcpp/src/string.cpp.o
 
 # ****************core****************
 CORE_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))../core
