@@ -19,13 +19,13 @@ LIBCPP_DIR_BESIDES += -path    ${LIBCPP_ROOT}/lib
 LIBCPP_DIR_BESIDES += -o -path ${LIBCPP_ROOT}/obj
 LIBCPP_DIR_BESIDES += -o -path ${LIBCPP_ROOT}/.trash
 LIBCPP_DIR_BESIDES += \)
-LIBCPP_DIRS   = $(shell find $(LIBCPP_RELATIVE) $(LIBCPP_RELATIVE) -prune -o -type d -print)
+LIBCPP_DIRS   = $(shell find $(LIBCPP_ROOT) $(LIBCPP_DIR_BESIDES) -prune -o -type d -print)
 
 LIBCPP_SOURCES_CC  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.c))
 LIBCPP_OBJECTS_CC  += $(LIBCPP_ROOT)/$(patsubst %.c,%.o,$(notdir $(LIBCPP_SOURCES_CC)))
 
 LIBCPP_SOURCES_PP  += $(foreach dir,$(LIBCPP_DIRS),$(wildcard $(dir)/*.cpp))
-LIBCPP_OBJECTS_PP  += $(patsubst %.cpp,%.cpp.o,$(LIBCPP_SOURCES_PP))    #($(LIBCPP_ROOT)/$(patsubst %.cpp,%.cpp.o,$(notdir $(LIBCPP_SOURCES_PP))))
+LIBCPP_OBJECTS_PP  += $(patsubst %.c,%.o,$(LIBCPP_SOURCES_PP))    #($(LIBCPP_ROOT)/$(patsubst %.cpp,%.cpp.o,$(notdir $(LIBCPP_SOURCES_PP))))
 
 LIBCPP_OBJECTS := ../../../libcpp/src/libcpp.cpp.o
 LIBCPP_OBJECTS := ../../../libcpp/src/object.cpp.o
@@ -66,7 +66,7 @@ MODULE_NAME := alpine_network_hooks
 KERNEL      := /lib/modules/$(shell uname -r)/build
 FLAGS       := -Wall -I /home/sparrow/alpine/inc
 KMOD_DIR    := $(shell pwd) 
-MODULE_OBJECTS := ./src/module.o ./src/hook.o $(LIBCPP_OBJECTS_PP) $(CORE_OBJECTS)
+MODULE_OBJECTS := ./src/module.o ./src/hook.o $(LIBCPP_OBJECTS) $(CORE_OBJECTS)
 
 ccflags-y += $(FLAGS)
 
@@ -82,6 +82,7 @@ cxx-selected-flags = $(shell echo $(KBUILD_CFLAGS) \
             | sed s/-Werror=designated-init//g \
             | sed s/-std=gnu90//g )
 
+# 向依赖库传递 FLAGS
 cxxflags = $(FLAGS) \
             $(cxx-selected-flags) \
             -fno-builtin \
